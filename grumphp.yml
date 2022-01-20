@@ -1,0 +1,22 @@
+grumphp:
+    tasks:
+        phpcs:
+            standard: PSR12
+        phpstan:
+            level: 8
+        phpunit:
+            always_execute: true
+        securitychecker_enlightn:
+            lockfile: ./composer.lock
+            run_always: false
+        phpcpd:
+            directory: ['src']
+        phpmnd:
+            directory: 'src'
+        phpmd:
+            whitelist_patterns:
+                - 'src'
+            exclude:
+                - '\src\Kernel.php'
+            ruleset:
+                - 'phpmd.xml'
