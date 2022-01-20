@@ -34,7 +34,7 @@ jobs:
 
             - name: code_quality
               run: |
-                  ./vendor/bin/phpcs src
+                  ./vendor/bin/phpcs --standard=PSR12 src
                   ./vendor/bin/phpstan analyse src --level max
                   ./vendor/bin/phpmd src text phpmd.xml
 
