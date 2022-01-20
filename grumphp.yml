@@ -3,7 +3,8 @@ grumphp:
         phpcs:
             standard: PSR12
         phpstan:
-            level: 8
+            configuration: ./phpstan.neon
+            level: max
         phpunit:
             always_execute: true
         securitychecker_enlightn:
