@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-	<header class="text-center font-bold mt-8 mb-12">
+	<header class="text-center font-bold mt-4 sm:mt-8 mb-12">
 		<h1 class="text-4xl sm:text-5xl text-gray-700">Aest</h1>
 		<h2 class="mt-3 text-lg sm:text-xl text-gray-400">
 			Area estimation tool
@@ -15,7 +15,7 @@
 	<main class="flex-grow max-w-2xl w-full flex flex-col md:flex-row items-center md:justify-around md:items-start">
 
 		<div class="relative border-2 border-black">
-			<p class="absolute bottom-72 pb-4 text-sm hidden" id="turnCounter">Turn&nbsp;
+			<p class="absolute pb-4 text-sm hidden" id="turnCounter">Turn&nbsp;
 				<span id="turnCount"></span>
 			</p>
 			<table class="area_container w-full h-full" cellspacing="0" cellpadding="0" id="areaContainer"></table>

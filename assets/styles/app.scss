@@ -2,7 +2,21 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-.area_container,
+$mobile: 480px;
+
+.area_container {
+    width: 300px;
+    height: 300px;
+    @media (hover: none) and (max-width: $mobile) {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+#turnCounter {
+    top: -1.5rem;
+}
+
 .board_container {
     width: 300px;
     height: 300px;
@@ -13,6 +27,11 @@
     height: 290px;
     top: 5px;
     left: 5px;
+    @media (hover: none) and (max-width: $mobile) {
+        top: -6.3rem;
+        left: -70px;
+        border: 2px solid black;
+    }
 }
 
 .area_cell {
