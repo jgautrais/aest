@@ -10,5 +10,12 @@ import './styles/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+import Game from './Game.js';
 
 const $ = require('jquery');
+
+$(document).ready(function () {
+    const game = new Game();
+
+    game.startGame();
+});

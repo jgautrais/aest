@@ -1,3 +1,14 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.area_container,
+.board_container {
+    width: 300px;
+    height: 300px;
+}
+
+.area_cell {
+    width: 10%;
+    height: 10%;
+}

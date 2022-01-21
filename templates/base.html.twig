@@ -2,8 +2,10 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>
-			{% block title %}Welcome!
+			{% block title %}Aest - Area estimation tool
 			{% endblock %}
 		</title>
 		<link
@@ -16,8 +18,8 @@
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
+		<meta name="description" content="Aest. Area estimation tool. A training tool for visual assessment of crop diseases."/>
 	</head>
-	<body>
-		{% block body %}{% endblock %}
-	</body>
-</html>
+	<body class="font-mono flex flex-col min-h-screen items-center"> {% block body %}{% endblock %}
+		</body>
+	</html>
