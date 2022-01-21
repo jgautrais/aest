@@ -1,11 +1,11 @@
 import Helpers from './Helpers.js';
+const helpers = new Helpers();
 const $ = require('jquery');
 
 export default class Area {
     _rows = 10;
     _columns = 10;
     _area = $('#areaContainer');
-    _helpers = new Helpers();
 
     constructor() {
         this.drawHTMLArea();
@@ -37,7 +37,7 @@ export default class Area {
     fillArea(fillValue) {
         const cells = $('.area_cell');
         for (let i = 0; i < fillValue; i++) {
-            const id = this._helpers.getRandomNum(0, cells.length - 1);
+            const id = helpers.getRandomNum(0, cells.length - 1);
             cells.eq(id).addClass('bg-black');
             cells.splice(id, 1);
         }

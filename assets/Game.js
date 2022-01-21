@@ -18,13 +18,18 @@ export default class Game {
     startGame() {
         this._board.getStartButton().on('click', () => {
             if (this._turnCount === 0) {
-                this._board.getStartButton().html('New estimate');
+                this._board.handleGameStart();
             } else {
                 this._area.clearArea();
                 this._board.resetDisplay();
             }
 
             this.newTurn();
+            console.log(
+                this._turnCount,
+                this._accuracy,
+                this._resultsPrecisionCategories
+            );
         });
     }
 
@@ -36,8 +41,15 @@ export default class Game {
         this._turnCount++;
 
         this._area.fillArea(turn.getPercentageToGuess());
-        this._board.handleStartTurn();
+        this._board.handleStartTurn(this._turnCount);
 
+        this.handleTurnSubmit(turn);
+    }
+
+    /**
+     * Turn submit
+     */
+    handleTurnSubmit(turn) {
         this._board.getInputForm().on('submit', (e) => {
             e.preventDefault();
 
@@ -46,6 +58,7 @@ export default class Game {
                 return;
             }
             turn.setUserEstimate(inputValue);
+
             this._board.handleFormSubmit();
 
             this._accuracy.push(turn.getAccuracy());
@@ -53,7 +66,8 @@ export default class Game {
 
             this._board.displayResults(
                 turn.getPercentageToGuess(),
-                turn.getUserEstimate()
+                turn.getUserEstimate(),
+                turn.getPrecisionCategory()
             );
 
             this._board.handleEndTurn();

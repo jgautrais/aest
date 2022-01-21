@@ -1,13 +1,12 @@
 import Helpers from './Helpers.js';
-
+const helpers = new Helpers();
 export default class Turn {
     _percentageToGuess;
     _userEstimate;
-    _helpers = new Helpers();
     _diff;
 
     constructor() {
-        this._percentageToGuess = this._helpers.getRandomNum(5, 96);
+        this._percentageToGuess = helpers.getRandomNum(5, 96);
     }
 
     getAccuracy() {

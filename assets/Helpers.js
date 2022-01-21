@@ -8,12 +8,12 @@ export default class Helpers {
     disableButton(element) {
         element.prop('disabled', true);
         element.removeClass('bg-black');
-        element.addClass('bg-gray-200');
+        element.addClass('button-disabled');
     }
 
     enableButton(element) {
         element.prop('disabled', false);
-        element.removeClass('bg-gray-200');
+        element.removeClass('button-disabled');
         element.addClass('bg-black');
     }
 
