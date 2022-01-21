@@ -14,25 +14,65 @@ export default class Board {
     _boardScore = $('#boardScore');
     _scoreEstimate = $('#scoreEstimate');
     _scoreTarget = $('#scoreTarget');
+    _stats = $('#stats');
+    _statsGameCount = $('#statsGameCount');
+    _statsTurnCount = $('#statsTurnCount');
+    _statsAccuracy = $('#statsAccuracy');
+    _statsPrecision0Percentage = $('#statsPrecision0Percentage');
+    _statsPrecision1Percentage = $('#statsPrecision1Percentage');
+    _statsPrecision2Percentage = $('#statsPrecision2Percentage');
+    _statsPrecision0Count = $('#statsPrecision0Count');
+    _statsPrecision1Count = $('#statsPrecision1Count');
+    _statsPrecision2Count = $('#statsPrecision2Count');
 
     constructor() {}
 
     handleGameStart() {
         this._startButton.html('New estimate');
         this._endButton.show();
+
         this._turnCounter.removeClass('hidden');
         this._turnCounter.addClass('flex');
+
+        this._stats.hide();
+    }
+
+    handleGameEnd(gameCount, turnCount, accuracy, precisions) {
+        this._boardScore.hide();
+        this._inputValue.val('');
+        this.resetBgColor();
+
+        this._statsGameCount.html(gameCount);
+        this._statsTurnCount.html(
+            `${turnCount} ${turnCount > 1 ? 'turns' : 'turn'}`
+        );
+        this._statsAccuracy.html(accuracy);
+
+        this.updateStatsPrecision(precisions);
+        this._stats.show();
+
+        this._endButton.hide();
+        this._startButton.html('New Game !');
+
+        this._turnCounter.addClass('hidden');
+        this._turnCounter.removeClass('flex');
     }
     /**
      * Handle turn start
      */
     handleStartTurn(turnCount) {
+        this._boardScore.hide();
+        this._inputValue.val('');
+
         this.resetBgColor();
+
         this._turnCount.html(turnCount);
+
         helpers.disableButton(this._startButton);
         helpers.disableButton(this._endButton);
         helpers.enableInput(this._inputValue);
         helpers.enableButton(this._inputSubmit);
+
         this._inputValue.focus();
     }
 
@@ -55,11 +95,6 @@ export default class Board {
         this._inputForm.off();
     }
 
-    resetDisplay() {
-        this._boardScore.hide();
-        this._inputValue.val('');
-    }
-
     setBgColor(precisionCategory) {
         switch (precisionCategory) {
             case 0:
@@ -78,9 +113,30 @@ export default class Board {
         const colors = ['bg-green-500', 'bg-yellow-300', 'bg-red-500'];
         colors.forEach((color) => {
             if (this._boardContainer.hasClass(color)) {
-                console.log('here');
                 this._boardContainer.removeClass(color);
             }
+        });
+    }
+
+    updateStatsPrecision(precisions) {
+        const total = helpers.getTotal(precisions);
+        const statsPrecisionPercentages = [
+            this._statsPrecision0Percentage,
+            this._statsPrecision1Percentage,
+            this._statsPrecision2Percentage,
+        ];
+        const statsPrecisionCounts = [
+            this._statsPrecision0Count,
+            this._statsPrecision1Count,
+            this._statsPrecision2Count,
+        ];
+
+        precisions.forEach((precision, index) => {
+            const percentage = ((precision / total) * 100).toFixed();
+            console.log(percentage, precision, total);
+
+            statsPrecisionPercentages[index].css('width', `${percentage}%`);
+            statsPrecisionCounts[index].html(precision);
         });
     }
 

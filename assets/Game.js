@@ -1,16 +1,21 @@
 import Area from './Area.js';
 import Board from './Board.js';
+import Helpers from './Helpers.js';
 import Turn from './Turn.js';
+const helpers = new Helpers();
 const $ = require('jquery');
 
 export default class Game {
     _area = new Area();
     _board = new Board();
+    _gameCount;
     _turnCount = 0;
-    _accuracy = [];
+    _accuracies = [];
     _resultsPrecisionCategories = [0, 0, 0]; // Precision categories: <5%, 5-10%, >10%
 
-    constructor() {}
+    constructor() {
+        this._gameCount = 0;
+    }
 
     /**
      * Initialize game
@@ -19,17 +24,27 @@ export default class Game {
         this._board.getStartButton().on('click', () => {
             if (this._turnCount === 0) {
                 this._board.handleGameStart();
-            } else {
-                this._area.clearArea();
-                this._board.resetDisplay();
             }
+            this._area.clearArea();
 
             this.newTurn();
             console.log(
                 this._turnCount,
-                this._accuracy,
+                this._accuracies,
                 this._resultsPrecisionCategories
             );
+        });
+
+        this._board.getEndButton().on('click', () => {
+            this._board.handleGameEnd(
+                this._gameCount,
+                this._turnCount,
+                helpers.getMeanAccuracy(this._accuracies),
+                this._resultsPrecisionCategories
+            );
+            this._turnCount = 0;
+            this._accuracies = [];
+            this._resultsPrecisionCategories = [0, 0, 0];
         });
     }
 
@@ -61,7 +76,7 @@ export default class Game {
 
             this._board.handleFormSubmit();
 
-            this._accuracy.push(turn.getAccuracy());
+            this._accuracies.push(turn.getAccuracy());
             this._resultsPrecisionCategories[turn.getPrecisionCategory()]++;
 
             this._board.displayResults(

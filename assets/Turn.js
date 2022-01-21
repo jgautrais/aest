@@ -36,6 +36,6 @@ export default class Turn {
     }
 
     setUserEstimate(inputValue) {
-        this._userEstimate = inputValue;
+        this._userEstimate = +inputValue;
     }
 }

@@ -5,6 +5,16 @@ export default class Helpers {
         return min + Math.floor(Math.random() * (max - min));
     }
 
+    getMeanAccuracy(array) {
+        const average = (array) =>
+            array.reduce((a, b) => a + b, 0) / array.length;
+        return average(array).toFixed(1);
+    }
+
+    getTotal(array) {
+        return array.reduce((a, b) => a + b, 0);
+    }
+
     disableButton(element) {
         element.prop('disabled', true);
         element.removeClass('bg-black');
