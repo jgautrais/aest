@@ -15,7 +15,7 @@ import Game from './Game.js';
 const $ = require('jquery');
 
 $(document).ready(function () {
-    const game = new Game();
+    const game = new Game(0);
 
     game.startGame();
 });

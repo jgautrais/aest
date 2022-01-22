@@ -13,8 +13,8 @@ export default class Game {
     _accuracies = [];
     _resultsPrecisionCategories = [0, 0, 0]; // Precision categories: <5%, 5-10%, >10%
 
-    constructor() {
-        this._gameCount = 0;
+    constructor(gameCount) {
+        this._gameCount = gameCount;
     }
 
     /**
@@ -23,16 +23,12 @@ export default class Game {
     startGame() {
         this._board.getStartButton().on('click', () => {
             if (this._turnCount === 0) {
+                this._gameCount++;
                 this._board.handleGameStart();
             }
             this._area.clearArea();
 
             this.newTurn();
-            console.log(
-                this._turnCount,
-                this._accuracies,
-                this._resultsPrecisionCategories
-            );
         });
 
         this._board.getEndButton().on('click', () => {

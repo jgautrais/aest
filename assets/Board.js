@@ -133,7 +133,6 @@ export default class Board {
 
         precisions.forEach((precision, index) => {
             const percentage = ((precision / total) * 100).toFixed();
-            console.log(percentage, precision, total);
 
             statsPrecisionPercentages[index].css('width', `${percentage}%`);
             statsPrecisionCounts[index].html(precision);
