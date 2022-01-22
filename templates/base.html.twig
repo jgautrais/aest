@@ -20,14 +20,27 @@
 		{% endblock %}
 		<meta name="description" content="Aest. Area estimation tool. A training tool for visual assessment of crop diseases."/>
 	</head>
-	{% if app.user %}
-		{{ app.user.email }}
-		<a href="{{ path('app_logout') }}">
-			Se déconnecter</a>
-	{% else %}
-		<a href="{{ path('login') }}">
-			Se connecter</a>
-	{% endif %}
-	<body class="font-mono flex flex-col min-h-screen items-center"> {% block body %}{% endblock %}
+	<body class="font-mono flex flex-col min-h-screen items-center">
+
+		<div class="relative font-bold mt-4 sm:mt-8 w-full">
+
+			<h1 class="text-center text-4xl sm:text-5xl text-gray-700">Aest</h1>
+
+			<div class="absolute right-0 top-0 flex flex-col">
+
+				{% if app.user %}
+					{{ app.user.email }}
+					<a href="{{ path('app_logout') }}">
+						Se déconnecter</a>
+				{% else %}
+					<a href="{{ path('login') }}">
+						Se connecter</a>
+				{% endif %}
+
+			</div>
+		</div>
+
+		<div class="flex-grow flex flex-col items-center"> {% block body %}{% endblock %}
+			</div>
 		</body>
 	</html>
