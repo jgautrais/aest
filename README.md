@@ -27,12 +27,16 @@ This project is an attempt to reproduce such a training tool.
 ```bash
 # Install dependencies
 composer install
+yarn install
 
 # Create 'aest' DB
 php bin/console d:d:c
 
 # Execute migrations and create tables
 php bin/console d:m:m
+
+# Build assets
+yarn encore dev
 ```
 
 ## Usage
