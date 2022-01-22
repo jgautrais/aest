@@ -20,6 +20,14 @@
 		{% endblock %}
 		<meta name="description" content="Aest. Area estimation tool. A training tool for visual assessment of crop diseases."/>
 	</head>
+	{% if app.user %}
+		{{ app.user.email }}
+		<a href="{{ path('app_logout') }}">
+			Se déconnecter</a>
+	{% else %}
+		<a href="{{ path('login') }}">
+			Se connecter</a>
+	{% endif %}
 	<body class="font-mono flex flex-col min-h-screen items-center"> {% block body %}{% endblock %}
 		</body>
 	</html>
