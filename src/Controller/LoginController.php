@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use Exception;
 use App\Entity\User;
+use Symfony\Component\Mime\Email;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,7 +50,8 @@ class LoginController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         UserAuthenticatorInterface $userAuthenticator,
         FormLoginAuthenticator $formLoginAuth,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailer
     ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -72,12 +75,26 @@ class LoginController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
+
             $userAuthenticator->authenticateUser(
                 $user,
                 $formLoginAuth,
                 $request
             );
+
+            $pseudo = $user->getPseudo();
+            $emailUser = $user->getEmail();
+            if (!is_string($emailUser)) {
+                throw new Exception('Email is not of type string');
+            }
+
+            $email = (new Email())
+                ->from('contact@aest.fr')
+                ->to($emailUser)
+                ->subject("Registration - Aest")
+                ->html("<p>Hello $pseudo, thank you for registering to Aest game !<br />Enjoy !</p>");
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('home');
         }
