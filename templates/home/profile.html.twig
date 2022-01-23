@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ parent() }}
+	- Profile
+{% endblock %}
+
+{% block body %}
+
+	<h2>{{ user.pseudo }}</h2>
+
+	<a href="{{ path('app_logout') }}">Se déconnecter</a>
+
+{% endblock %}

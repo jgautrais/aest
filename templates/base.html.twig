@@ -20,27 +20,63 @@
 		{% endblock %}
 		<meta name="description" content="Aest. Area estimation tool. A training tool for visual assessment of crop diseases."/>
 	</head>
-	<body class="font-mono flex flex-col min-h-screen items-center">
+	<body class="font-mono flex flex-col min-h-screen items-center px-2 sm:px-4 max-w-xl mx-auto">
 
-		<div class="relative font-bold mt-4 sm:mt-8 w-full">
+		<header class="flex justify-between items-center font-bold mt-4 sm:mt-8 w-full">
 
-			<h1 class="text-center text-4xl sm:text-5xl text-gray-700">Aest</h1>
+			<a href="/" class="block p-3 bg-gray-100">
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewbox="0 0 25 25" stroke="#374151" fill-opacity="0">
+					<title>
+						leaderboard
+					</title>
+					<path d="M15 19H9V12.5V8.6C9 8.26863 9.26863 8 9.6 8H14.4C14.7314 8 15 8.26863 15 8.6V14.5V19Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M20.4 19H15V15.1C15 14.7686 15.2686 14.5 15.6 14.5H20.4C20.7314 14.5 21 14.7686 21 15.1V18.4C21 18.7314 20.7314 19 20.4 19Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M9 19V13.1C9 12.7686 8.73137 12.5 8.4 12.5H3.6C3.26863 12.5 3 12.7686 3 13.1V18.4C3 18.7314 3.26863 19 3.6 19H9Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</a>
 
-			<div class="absolute right-0 top-0 flex flex-col">
 
-				{% if app.user %}
-					{{ app.user.email }}
-					<a href="{{ path('app_logout') }}">
-						Se déconnecter</a>
-				{% else %}
-					<a href="{{ path('login') }}">
-						Se connecter</a>
-				{% endif %}
+			<a href="{{ path('home') }}">
+				<h1 class="mx-auto text-4xl sm:text-5xl text-gray-700 max-w-min pt-1.5">Aest</h1>
+			</a>
 
-			</div>
-		</div>
 
-		<div class="flex-grow flex flex-col items-center"> {% block body %}{% endblock %}
-			</div>
+			{% if app.user %}
+				<a href="{{ path('profile') }}" class="block p-3 bg-gray-100">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 20 20" fill="#374151">
+						<title>
+							user avatar
+						</title>
+						<path d="M10 12.5c-5.92 0-9 3.5-9 5.5v1h18v-1c0-2-3.08-5.5-9-5.5z"/>
+						<circle cx="10" cy="6" r="5"/>
+					</svg>
+				</a>
+			{% else %}
+				<button type="button" id="login-icon" class="block p-3 bg-gray-100">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 20 20" fill="#374151">
+						<title>
+							user avatar
+						</title>
+						<path d="M10 12.5c-5.92 0-9 3.5-9 5.5v1h18v-1c0-2-3.08-5.5-9-5.5z"/>
+						<circle cx="10" cy="6" r="5"/>
+					</svg>
+				</button>
+			{% endif %}
+
+		</header>
+
+		<main class="flex-grow flex flex-col items-center"> {% block body %}{% endblock %}
+			</main>
+
+			<footer class="text-center text-gray-400 text-xs my-6">
+				<p class="mb-2">
+					Coded by
+					<a class="text-blue-400 hover:underline" href="https://www.jeremygautrais.fr/">Jérémy</a>
+				</p>
+				<p>
+					Source code on
+					<a class="text-blue-400 hover:underline" href="https://github.com/jgautrais/aest/tree/main">Github</a>
+				</p>
+			</footer>
 		</body>
 	</html>

@@ -15,7 +15,27 @@ import Game from './Game.js';
 const $ = require('jquery');
 
 $(document).ready(function () {
+    handleLoginModal();
+
     const game = new Game(0);
 
     game.startGame();
 });
+
+function handleLoginModal() {
+    const loginModal = $('#login-modal');
+    const loginModalHide = $('#login-modal-hide');
+    const loginIcon = $('#login-icon');
+
+    loginIcon.on('click', () => {
+        if (loginModal.hasClass('hidden')) {
+            loginModal.removeClass('hidden');
+        }
+    });
+
+    loginModalHide.on('click', () => {
+        if (!loginModal.hasClass('hidden')) {
+            loginModal.addClass('hidden');
+        }
+    });
+}
