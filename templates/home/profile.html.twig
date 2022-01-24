@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block body %}
-
 	<div class="relative w-full mx-auto max-w-2xl mt-16">
 		<div class="flex justify-between items-center">
 			<h2 class="text-3xl font-bold text-indigo-700 bg-indigo-100 rounded pt-2.5 pr-4 leading-none">{{ user.pseudo }}</h2>
@@ -28,16 +27,16 @@
 			<p class="text-gray-700 mt-4 mb-2">
 				<span class="inline-block font-bold w-36">Turns played:
 				</span>
-				<span class="text-black" id="userTurns">25</span>
+				<span class="text-black" id="userTurns">{{ turns }}</span>
 			</p>
 			<p class="text-gray-700">
 				<span class="inline-block font-bold w-36">Mean accuracy:
 				</span>
-				<span class="text-black text-lg font-bold" id="userAccuracy">96.7</span>%
+				<span class="text-black text-lg font-bold" id="userAccuracy">{{ accuracy|number_format(1) }}</span>%
 			</p>
 			<p class="mt-10 font-bold">Accuracy details</p>
 			<div class="flex flex-wrap">
-				<button type="button" class="mr-2 mt-2 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="userPrecisionAll">All time</button>
+				<button type="button" class="mr-2 mt-2 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1 bg-gray-700 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="userPrecisionAll">All time</button>
 				<button type="button" class="mr-2 mt-2 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="userPrecisionMonth">Last 30 Days</button>
 				<button type="button" class="mr-2 mt-2 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="userPrecisionWeek">Last 7 Days</button>
 				<button type="button" class="mt-2 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="userPrecisionDay">Today</button>
@@ -46,31 +45,31 @@
 				<p class="mr-4">
 					<span class="inline-block font-bold w-24">Turns played:
 					</span>
-					<span class="text-black" id="userStatsPrecisionTurns">25</span>
+					<span class="text-black" id="userStatsPrecisionTurns">{{ turns }}</span>
 				</p>
 				<span class="block">|</span>
 				<p class="ml-4">
 					<span class="inline-block font-bold w-28">Mean accuracy:
 					</span>
-					<span class="text-black text-base font-bold" id="userStatsPrecisionAccuracy">96.7</span>%
+					<span class="text-black text-base font-bold" id="userStatsPrecisionAccuracy">{{ accuracy|number_format(1) }}</span>%
 				</p>
 			</div>
 			<div class="text-xs border-l-2 border-black flex-grow mt-3 mb-2 flex justify-between w-5/6">
 				<div class="w-5/6">
-					<p class="bg-green-500 my-4 py-1" id="userStatsPrecision0Percentage">
+					<p class="bg-green-500 my-4 py-1" id="userStatsPrecision0Percentage" style="width:{{ stats[0].count / turns * 100 }}%">
 						<span class="pl-4">&lt;&nbsp;5%</span>
 					</p>
-					<p class="bg-yellow-300 my-4 py-1" id="userStatsPrecision1Percentage">
+					<p class="bg-yellow-300 my-4 py-1" id="userStatsPrecision1Percentage" style="width:{{ stats[1].count / turns * 100 }}%">
 						<span class="pl-4">&lt;&nbsp;10%</span>
 					</p>
-					<p class="bg-red-500 my-4 py-1" id="userStatsPrecision2Percentage">
+					<p class="bg-red-500 my-4 py-1" id="userStatsPrecision2Percentage" style="width:{{ stats[2].count / turns * 100 }}%">
 						<span class="pl-4">&gt;=10%</span>
 					</p>
 				</div>
 				<div class="w-1/6">
-					<p class="my-4 pl-4 py-1" id="userStatsPrecision0Count">4</p>
-					<p class="my-4 pl-4 py-1" id="userStatsPrecision1Count">4</p>
-					<p class="my-4 pl-4 py-1" id="userStatsPrecision2Count">4</p>
+					<p class="my-4 pl-4 py-1" id="userStatsPrecision0Count">{{ stats[0].count }}</p>
+					<p class="my-4 pl-4 py-1" id="userStatsPrecision1Count">{{ stats[1].count }}</p>
+					<p class="my-4 pl-4 py-1" id="userStatsPrecision2Count">{{ stats[2].count }}</p>
 				</div>
 			</div>
 		</div>
