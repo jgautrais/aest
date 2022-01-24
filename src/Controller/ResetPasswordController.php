@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Exception;
 use App\Entity\User;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Address;
 use App\Form\ChangePasswordFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -91,6 +92,7 @@ class ResetPasswordController extends AbstractController
     public function reset(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
+        MailerInterface $mailer,
         string $token = null
     ): Response {
         if ($token) {
@@ -144,7 +146,21 @@ class ResetPasswordController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            return $this->redirectToRoute('home');
+            if (!is_string($this->getParameter('mailer_from'))) {
+                throw new Exception('Email is not of type string');
+            }
+
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($user->getEmail())
+                ->subject("Profile Update - Aest")
+                ->html($this->renderView('updateEmail.html.twig', [
+                    'pseudo' => $user->getPseudo()
+                ]));
+
+            $mailer->send($email);
+
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('reset_password/reset.html.twig', [
