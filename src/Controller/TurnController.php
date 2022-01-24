@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Controller;
+
+use DateTime;
+use Exception;
+use App\Entity\Turn;
+use App\Entity\User;
+use App\Repository\TurnRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class TurnController extends AbstractController
+{
+    /**
+     * @Route("/isLogged", name="isLogged")
+     */
+    public function isLogged(): Response
+    {
+        $user = $this->getUser();
+
+        if (null === $user) {
+            return $this->json(
+                ['isLogged' => false]
+            );
+        }
+        return $this->json(
+            ['isLogged' => true]
+        );
+    }
+
+    /**
+     * @Route("/saveTurn/{area}/{estimate}/{accuracy}/{accuracyCategory}/", name="saveTurn")
+     */
+    public function saveTurn(
+        int $area,
+        int $estimate,
+        int $accuracy,
+        int $accuracyCategory,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $user = $this->getUser();
+
+        if (null === $user) {
+            return $this->json(
+                ['success' => false]
+            );
+        }
+
+        if (!$user instanceof User) {
+            throw new Exception('User not authenticated');
+        }
+
+        $turn = new Turn();
+
+        $turn->setUser($user);
+        $turn->setArea($area);
+        $turn->setEstimate($estimate);
+        $turn->setAccuracy($accuracy);
+        $turn->setAccuracyCategory($accuracyCategory);
+        $turn->setDate(new DateTime());
+
+        $entityManager->persist($turn);
+        $entityManager->flush();
+
+        return $this->json(
+            ['success' => true]
+        );
+    }
+
+    /**
+     * @Route("/getPrecision", name="getPrecision")
+     */
+    public function getPrecisionCategories(TurnRepository $turnRepository): Response
+    {
+        $user = $this->getUser();
+
+        if (null === $user) {
+            return $this->json(
+                ['success' => false]
+            );
+        }
+
+        if (!$user instanceof User) {
+            throw new Exception('User not authenticated');
+        }
+
+        $precisionCategories = $turnRepository->getStatsLastWeek($user);
+        var_dump($precisionCategories);
+        die();
+    }
+}

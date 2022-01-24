@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -50,6 +52,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="integer", options={"default" : 0})
      */
     private int $gameCount;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Turn::class, mappedBy="user", orphanRemoval=true)
+     */
+    private Collection $turns;
+
+    public function __construct()
+    {
+        $this->turns = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -160,6 +172,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setGameCount(int $gameCount): self
     {
         $this->gameCount = $gameCount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Turn[]
+     */
+    public function getTurns(): Collection
+    {
+        return $this->turns;
+    }
+
+    public function addTurn(Turn $turn): self
+    {
+        if (!$this->turns->contains($turn)) {
+            $this->turns[] = $turn;
+            $turn->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTurn(Turn $turn): self
+    {
+        if ($this->turns->removeElement($turn)) {
+            // set the owning side to null (unless already changed)
+            if ($turn->getUser() === $this) {
+                $turn->setUser(null);
+            }
+        }
 
         return $this;
     }

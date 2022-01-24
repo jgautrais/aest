@@ -6,6 +6,7 @@ export default class Board {
     _boardContainer = $('#board');
     _turnCounter = $('#turnCounter');
     _turnCount = $('#turnCount');
+    _turnError = $('#turnError');
     _startButton = $('#startButton');
     _endButton = $('#endButton');
     _inputForm = $('#inputForm');
@@ -137,6 +138,10 @@ export default class Board {
             statsPrecisionPercentages[index].css('width', `${percentage}%`);
             statsPrecisionCounts[index].html(precision);
         });
+    }
+
+    toggleTurnError() {
+        this._turnError.toggleClass('hidden');
     }
 
     /**

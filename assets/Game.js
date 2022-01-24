@@ -2,7 +2,9 @@ import Area from './Area.js';
 import Board from './Board.js';
 import Helpers from './Helpers.js';
 import Turn from './Turn.js';
+import TurnHelpers from './TurnHelpers.js';
 const helpers = new Helpers();
+const turnHelpers = new TurnHelpers();
 const $ = require('jquery');
 
 export default class Game {
@@ -12,6 +14,8 @@ export default class Game {
     _turnCount = 0;
     _accuracies = [];
     _resultsPrecisionCategories = [0, 0, 0]; // Precision categories: <5%, 5-10%, >10%
+    _userLogged;
+    _turnError = false;
 
     constructor(gameCount) {
         this._gameCount = gameCount;
@@ -22,6 +26,17 @@ export default class Game {
      */
     startGame() {
         this._board.getStartButton().on('click', () => {
+            // Check if user is logged in
+            turnHelpers.isLogged().then((bool) => {
+                this._userLogged = bool;
+            });
+
+            // Clears turn logging error of previous turn if any
+            if (this._turnError === true) {
+                this._turnError = false;
+                this._board.toggleTurnError();
+            }
+
             if (this._turnCount === 0) {
                 this._gameCount++;
                 this._board.handleGameStart();
@@ -80,6 +95,24 @@ export default class Game {
                 turn.getUserEstimate(),
                 turn.getPrecisionCategory()
             );
+
+            // If user logged, record turn
+            if (this._userLogged) {
+                turnHelpers
+                    .saveTurn(
+                        turn.getPercentageToGuess(),
+                        turn.getUserEstimate(),
+                        turn.getAccuracy(),
+                        turn.getPrecisionCategory()
+                    )
+                    .then((data) => {
+                        return data.success;
+                    })
+                    .catch((e) => {
+                        this._turnError = true;
+                        this._board.toggleTurnError();
+                    });
+            }
 
             this._board.handleEndTurn();
         });
