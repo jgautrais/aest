@@ -16,6 +16,7 @@ const $ = require('jquery');
 
 $(document).ready(function () {
     handleLoginModal();
+    handleFlashMessagesDisplay();
 
     const game = new Game(0);
 
@@ -38,4 +39,8 @@ function handleLoginModal() {
             loginModal.addClass('hidden');
         }
     });
+}
+
+function handleFlashMessagesDisplay() {
+    $('.flash').delay(5000).fadeOut('slow');
 }

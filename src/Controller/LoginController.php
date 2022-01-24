@@ -43,7 +43,9 @@ class LoginController extends AbstractController
         throw new Exception('Don\'t forget to activate logout in security.yaml');
     }
 
-    #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
+    /**
+     * @Route("/register", name="app_register", methods={"GET", "POST"})
+     */
     public function register(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
@@ -83,15 +85,18 @@ class LoginController extends AbstractController
 
             $pseudo = $user->getPseudo();
             $emailUser = $user->getEmail();
-            if (!is_string($emailUser)) {
+            if (!is_string($emailUser) || !is_string($this->getParameter('mailer_from'))) {
                 throw new Exception('Email is not of type string');
             }
 
             $email = (new Email())
-                ->from('contact@aest.fr')
+                ->from($this->getParameter('mailer_from'))
                 ->to($emailUser)
                 ->subject("Registration - Aest")
-                ->html("<p>Hello $pseudo, thank you for registering to Aest game !<br />Enjoy !</p>");
+                ->html($this->renderView('registrationEmail.html.twig', [
+                    'pseudo' => $pseudo,
+                    'email' => $emailUser
+                ]));
 
             $mailer->send($email);
 

@@ -6,14 +6,22 @@
 
 {% block body %}
 
-	<div class="w-full mt-16">
+	<div class="relative w-full mt-16">
 		<div class="flex justify-between items-center">
 			<h2 class="text-2xl font-bold">{{ user.pseudo }}</h2>
 
 			<a href="{{ path('app_logout') }}" class="text-sm text-white block inline-flex justify-center rounded-md border border-red-300 shadow-sm px-4 py-2 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Log out</a>
 		</div>
 
-		<a href="/" class="mt-5 text-white text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1.5 bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Update your info</a>
+		<a href="{{ path('profile_edit', {'id': user.id}) }}" class="mt-5 text-white text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1.5 bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Update your info</a>
+
+		{% for category, messages in app.flashes %}
+			{% for message in messages %}
+				<span class="absolute left-0 left-0 flash mt-5 text-green-600 text-sm block inline-flex justify-center rounded-md border border-{{ category }}-100 shadow-sm px-3 py-1.5 bg-{{ category }}-200">
+					{{ message }}
+				</span>
+			{% endfor %}
+		{% endfor %}
 
 		<div class="mt-16">
 			<h3 class="text-3xl font-bold">Your stats</h3>

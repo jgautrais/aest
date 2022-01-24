@@ -8,6 +8,11 @@ input {
     min-width: 0 !important;
 }
 
+.flash {
+    pointer-events: none;
+    top: -4rem;
+}
+
 .area_border {
     @media (hover: none) and (max-width: $mobile) {
         margin-top: 1.7rem;
