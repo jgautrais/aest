@@ -153,7 +153,7 @@ class ResetPasswordController extends AbstractController
             $email = (new Email())
                 ->from($this->getParameter('mailer_from'))
                 ->to($user->getEmail())
-                ->subject("Profile Update - Aest")
+                ->subject("Password Update - Aest")
                 ->html($this->renderView('updatePasswordEmail.html.twig', [
                     'pseudo' => $user->getPseudo()
                 ]));
