@@ -4,10 +4,6 @@
 {% endblock %}
 
 {% block body %}
-	{% if error %}
-		<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-	{% endif %}
-
 	<form action="{{ path('login') }}" method="post">
 		<div class="bg-white px-4 pt-5 pb-8 sm:p-6">
 			<div class="sm:flex sm:items-start justify-center">
@@ -24,6 +20,10 @@
 							<label class="block text-sm text-left" for="password">Password:</label>
 							<input class="block bg-gray-200 px-2 py-0.5 ml-2 flex-shrink" type="password" id="password" name="_password"/>
 						</div>
+						{% if error %}
+							<p class="text-sm text-red-500 mt-2">
+								{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+						{% endif %}
 
 						<input type="hidden" name="{{ path('home') }}" value="/"/>
 

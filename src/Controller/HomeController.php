@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -21,11 +21,11 @@ class HomeController extends AbstractController
      */
     public function profile(): Response
     {
-        if (!$this->getUser()) {
+        $user = $this->getUser();
+
+        if (null === $user) {
             return $this->redirectToRoute('login');
         }
-
-        $user = $this->getUser();
 
         return $this->render('home/profile.html.twig', [
             'user' => $user,
