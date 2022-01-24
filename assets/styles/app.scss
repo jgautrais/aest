@@ -8,6 +8,12 @@ input {
     min-width: 0 !important;
 }
 
+.area_border {
+    @media (hover: none) and (max-width: $mobile) {
+        margin-top: 1.7rem;
+    }
+}
+
 .area_container {
     width: 300px;
     height: 300px;
