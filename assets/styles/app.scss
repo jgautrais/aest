@@ -4,6 +4,21 @@
 
 $mobile: 480px;
 
+input {
+    min-width: 0 !important;
+}
+
+.flash {
+    pointer-events: none;
+    top: -4rem;
+}
+
+.area_border {
+    @media (hover: none) and (max-width: $mobile) {
+        margin-top: 1.7rem;
+    }
+}
+
 .area_container {
     width: 300px;
     height: 300px;
