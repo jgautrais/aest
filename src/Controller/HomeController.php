@@ -6,6 +6,7 @@ use Exception;
 use App\Entity\User;
 use App\Form\ProfileEditFormType;
 use Symfony\Component\Mime\Email;
+use App\Repository\TurnRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -28,7 +29,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(): Response
+    public function profile(TurnRepository $turnRepository): Response
     {
         $user = $this->getUser();
 
@@ -36,8 +37,27 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
+        if (!$user instanceof User) {
+            throw new Exception('User not authenticated');
+        }
+
+        $userStats = $turnRepository->getStatsAllTime($user);
+
+        $turns = 0;
+        $totalAccuracy = 0;
+
+        foreach ($userStats as $precision) {
+            $turns += $precision['count'];
+            $totalAccuracy += $precision['sumAccuracy'];
+        }
+
+        $meanAccuracy = $totalAccuracy / $turns;
+
         return $this->render('home/profile.html.twig', [
             'user' => $user,
+            'stats' => $userStats,
+            'turns' => $turns,
+            'accuracy' => $meanAccuracy
         ]);
     }
 
