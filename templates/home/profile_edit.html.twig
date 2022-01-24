@@ -20,7 +20,7 @@
                                 'class': 'block text-sm w-24 text-left'
                             }}) }}
 								{{ form_widget(registrationForm.pseudo, {'attr': {
-                                'class': 'block bg-gray-200 px-2 py-0.5 ml-2'
+                                'class': 'flex-grow text-xs block bg-gray-200 px-2 py-1.5 ml-2'
                             }}) }}
 							</div>
 
@@ -40,7 +40,7 @@
                                 'class': 'block text-sm w-24 text-left'
                             }}) }}
 								{{ form_widget(registrationForm.email, {'attr': {
-                                'class': 'block bg-gray-200 px-2 py-0.5 ml-2'
+                                'class': 'flex-grow text-xs block bg-gray-200 px-2 py-1.5 ml-2'
                             }}) }}
 							</div>
 
@@ -60,7 +60,7 @@
                                 'class': 'block text-sm w-24 text-left'
                             }}) }}
 								{{ form_widget(registrationForm.plainPassword, {'attr': {
-                                'class': 'block bg-gray-200 px-2 py-0.5 ml-2'
+                                'class': 'flex-grow text-xs block bg-gray-200 px-2 py-1.5 ml-2'
                             }}) }}
 							</div>
 
@@ -81,7 +81,7 @@
                                 'class': 'block text-sm w-24 text-left'
                             }}) }}
 								{{ form_widget(registrationForm.confirmPassword, {'attr': {
-                                'class': 'block bg-gray-200 px-2 py-0.5 ml-2'
+                                'class': 'flex-grow text-xs block bg-gray-200 px-2 py-1.5 ml-2'
                             }}) }}
 							</div>
 
@@ -118,7 +118,7 @@
 		</div>
 		{{ form_rest(registrationForm) }}
 		{{ form_end(registrationForm) }}
-		<div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse justify-between">
+		<div class="bg-gray-50 mt-6 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse justify-between">
 			{{ include('home/_delete_form.html.twig') }}
 		</div>
 
