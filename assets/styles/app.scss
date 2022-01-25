@@ -26,6 +26,10 @@ input {
         width: 150px;
         height: 150px;
     }
+    tr td {
+        padding: 0;
+        margin: 0;
+    }
 }
 
 #turnCounter {
@@ -56,4 +60,12 @@ input {
 
 .button-disabled {
     background-color: #ddd !important;
+}
+
+.userStatsActive {
+    @apply bg-gray-700 text-white hover:bg-gray-600;
+}
+
+.userStatsInactive {
+    @apply bg-white text-gray-700 hover:bg-gray-50;
 }
