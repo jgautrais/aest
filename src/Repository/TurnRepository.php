@@ -25,7 +25,7 @@ class TurnRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('t')
-            ->select("count(t.accuracyCategory) as count, sum(t.accuracy) as sumAccuracy")
+            ->select("count(t.accuracyCategory) as turns, sum(t.accuracy) as sumAccuracy")
             ->where('t.user = :user')
             ->groupBy("t.accuracyCategory")
             ->orderBy("t.accuracyCategory", "ASC")
@@ -38,7 +38,7 @@ class TurnRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('t')
-            ->select("count(t.accuracyCategory) as count, sum(t.accuracy) as sumAccuracy")
+            ->select("count(t.accuracyCategory) as turns, sum(t.accuracy) as sumAccuracy")
             ->andwhere('t.user = :user')
             ->andWhere('t.date BETWEEN :l30days AND :today')
             ->groupBy("t.accuracyCategory")
@@ -54,7 +54,7 @@ class TurnRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('t')
-            ->select("count(t.accuracyCategory) as count, sum(t.accuracy) as sumAccuracy")
+            ->select("count(t.accuracyCategory) as turns, sum(t.accuracy) as sumAccuracy")
             ->andwhere('t.user = :user')
             ->andWhere('t.date BETWEEN :l30days AND :today')
             ->groupBy("t.accuracyCategory")
@@ -70,7 +70,7 @@ class TurnRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('t')
-            ->select("count(t.accuracyCategory) as count, sum(t.accuracy) as sumAccuracy")
+            ->select("count(t.accuracyCategory) as turns, sum(t.accuracy) as sumAccuracy")
             ->andwhere('t.user = :user')
             ->andWhere('t.date >= :today')
             ->groupBy("t.accuracyCategory")

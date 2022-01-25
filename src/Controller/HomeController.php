@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\ProfileEditFormType;
 use Symfony\Component\Mime\Email;
 use App\Repository\TurnRepository;
+use App\Service\HandleUserStats;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -29,7 +30,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function profile(TurnRepository $turnRepository): Response
+    public function profile(TurnRepository $turnRepository, HandleUserStats $handleUserStats): Response
     {
         $user = $this->getUser();
 
@@ -43,21 +44,11 @@ class HomeController extends AbstractController
 
         $userStats = $turnRepository->getStatsAllTime($user);
 
-        $turns = 0;
-        $totalAccuracy = 0;
-
-        foreach ($userStats as $precision) {
-            $turns += $precision['count'];
-            $totalAccuracy += $precision['sumAccuracy'];
-        }
-
-        $meanAccuracy = $totalAccuracy / $turns;
+        $userData = $handleUserStats->getUserData($userStats);
 
         return $this->render('home/profile.html.twig', [
             'user' => $user,
-            'stats' => $userStats,
-            'turns' => $turns,
-            'accuracy' => $meanAccuracy
+            'stats' => $userData,
         ]);
     }
 
