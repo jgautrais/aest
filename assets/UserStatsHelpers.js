@@ -9,6 +9,14 @@ export default class UserStatsHelpers {
             });
     }
 
+    incrementGameCount() {
+        return fetch('/incrementGameCount')
+            .then((res) => res.json())
+            .then((data) => {
+                return data.success;
+            });
+    }
+
     saveTurn(percentageToGuess, userEstimate, accuracy, accuracyCategory) {
         return fetch(
             `/saveTurn/${percentageToGuess}/${userEstimate}/${accuracy}/${accuracyCategory}`

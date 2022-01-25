@@ -72,6 +72,32 @@ class TurnController extends AbstractController
     }
 
     /**
+     * @Route("/incrementGameCount/", name="incrementGameCount")
+     */
+    public function incrementGameCount(EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        if (null === $user) {
+            return $this->json(
+                ['success' => false]
+            );
+        }
+
+        if (!$user instanceof User) {
+            throw new Exception('User not authenticated');
+        }
+
+        $user->setGameCount($user->getGameCount() + 1);
+        $entityManager->flush();
+
+        return $this->json(
+            ['success' => true]
+        );
+    }
+
+
+    /**
      * @Route("/getUserStats/{period}", name="getUserStats")
      */
     public function getUserStats(

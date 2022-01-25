@@ -47,6 +47,10 @@ export default class Game {
         });
 
         this._board.getEndButton().on('click', () => {
+            if (this._userLogged) {
+                userStatsHelpers.incrementGameCount();
+            }
+
             this._board.handleGameEnd(
                 this._gameCount,
                 this._turnCount,
