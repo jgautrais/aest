@@ -61,7 +61,6 @@ function handleUserStats() {
         buttons.forEach((button, index) => {
             button.on('click', () => {
                 if (button.hasClass('userStatsActive')) {
-                    console.log('return');
                     return;
                 }
 
