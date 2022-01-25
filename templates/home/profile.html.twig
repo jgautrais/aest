@@ -27,12 +27,12 @@
 			<p class="text-gray-700 mt-4 mb-2">
 				<span class="inline-block font-bold w-36">Turns played:
 				</span>
-				<span class="text-black" id="userTurns">{{ turns }}</span>
+				<span class="text-black" id="userTurns">{{ stats.turns }}</span>
 			</p>
 			<p class="text-gray-700">
 				<span class="inline-block font-bold w-36">Mean accuracy:
 				</span>
-				<span class="text-black text-lg font-bold" id="userAccuracy">{{ accuracy|number_format(1) }}</span>%
+				<span class="text-black text-lg font-bold" id="userAccuracy">{{ stats.meanAccuracy }}</span>%
 			</p>
 			<p class="mt-10 font-bold">Accuracy details</p>
 			<div class="flex flex-wrap">
@@ -45,31 +45,31 @@
 				<p class="mr-4">
 					<span class="inline-block font-bold w-24">Turns played:
 					</span>
-					<span class="text-black" id="userStatsPrecisionTurns">{{ turns }}</span>
+					<span class="text-black" id="userStatsPrecisionTurns">{{ stats.turns }}</span>
 				</p>
 				<span class="block">|</span>
 				<p class="ml-4">
 					<span class="inline-block font-bold w-28">Mean accuracy:
 					</span>
-					<span class="text-black text-base font-bold" id="userStatsPrecisionAccuracy">{{ accuracy|number_format(1) }}</span>%
+					<span class="text-black text-base font-bold" id="userStatsPrecisionAccuracy">{{ stats.meanAccuracy }}</span>%
 				</p>
 			</div>
 			<div class="text-xs border-l-2 border-black flex-grow mt-3 mb-2 flex justify-between w-5/6">
 				<div class="w-5/6">
-					<p class="bg-green-500 my-4 py-1" id="userStatsPrecision0Percentage" style="width:{{ stats[0].count / turns * 100 }}%">
+					<p class="bg-green-500 my-4 py-1" id="userStatsPrecision0Percentage" style="width:{{ stats.precision0.width }}%">
 						<span class="pl-4">&lt;&nbsp;5%</span>
 					</p>
-					<p class="bg-yellow-300 my-4 py-1" id="userStatsPrecision1Percentage" style="width:{{ stats[1].count / turns * 100 }}%">
+					<p class="bg-yellow-300 my-4 py-1" id="userStatsPrecision1Percentage" style="width:{{ stats.precision1.width }}%">
 						<span class="pl-4">&lt;&nbsp;10%</span>
 					</p>
-					<p class="bg-red-500 my-4 py-1" id="userStatsPrecision2Percentage" style="width:{{ stats[2].count / turns * 100 }}%">
+					<p class="bg-red-500 my-4 py-1" id="userStatsPrecision2Percentage" style="width:{{ stats.precision2.width }}%">
 						<span class="pl-4">&gt;=10%</span>
 					</p>
 				</div>
 				<div class="w-1/6">
-					<p class="my-4 pl-4 py-1" id="userStatsPrecision0Count">{{ stats[0].count }}</p>
-					<p class="my-4 pl-4 py-1" id="userStatsPrecision1Count">{{ stats[1].count }}</p>
-					<p class="my-4 pl-4 py-1" id="userStatsPrecision2Count">{{ stats[2].count }}</p>
+					<p class="font-bold text-gray-800 my-4 pl-4 py-1" id="userStatsPrecision0Count">{{ stats.precision0.turns }}</p>
+					<p class="font-bold text-gray-800 my-4 pl-4 py-1" id="userStatsPrecision1Count">{{ stats.precision1.turns }}</p>
+					<p class="font-bold text-gray-800 my-4 pl-4 py-1" id="userStatsPrecision2Count">{{ stats.precision2.turns }}</p>
 				</div>
 			</div>
 		</div>
