@@ -25,6 +25,11 @@
 		<div class="mt-16">
 			<h3 class="text-3xl font-bold">Your stats</h3>
 			<p class="text-gray-700 mt-4 mb-2">
+				<span class="inline-block font-bold w-36">Games played:
+				</span>
+				<span class="text-black" id="userTurns">{{ user.gameCount }}</span>
+			</p>
+			<p class="text-gray-700 mt-4 mb-2">
 				<span class="inline-block font-bold w-36">Turns played:
 				</span>
 				<span class="text-black" id="userTurns">{{ stats.turns }}</span>
@@ -74,7 +79,7 @@
 			</div>
 		</div>
 
-		<a href="{{ path('home') }}" class="mt-16 text-white text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Back to the game</a>
+		<a href="{{ path('home') }}" class="my-16 text-white text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Back to the game</a>
 
 	</div>
 
