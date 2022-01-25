@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Aest - Leaderboard
+{% endblock %}
+
+{% block body %}
+	<div class="relative w-full mx-auto max-w-2xl my-16">
+		<div class="flex justify-between items-center mb-12">
+			<h2 class="text-3xl font-bold text-purple-700 bg-purple-100 rounded pt-2.5 pr-4 leading-none">Leaderboard</h2>
+		</div>
+		{% include "/home/_login_modal.html.twig" %}
+		<table class="w-full text-left table-fixed break-all">
+			<thead class="text-yellow-800 text-lg border-b-2 border-yellow-300 bg-yellow-50">
+				<tr>
+					<th class="pb-2 pt-1 w-20">Rank</th>
+					<th class="pb-2 pt-1 w-1/2">Pseudo</th>
+					<th class="pb-2 pt-1 w-2/6">Turns</th>
+					<th class="pb-2 pt-1 w-3/6">Accuracy</th>
+				</tr>
+			</thead>
+			<tbody class="text-sm sm:text-base">
+				{% for entry in leaderboard|slice(0, leaderboardSize) %}
+					{% if isInLeaderBoard is defined and isInLeaderBoard == true and entry.id == app.user.id %}
+						<tr class="border-b border-grey-200 bg-purple-50 text-purple-700 font-bold">
+							<td class="pt-5 pb-1 pr-4 align-bottom pl-2">{{ loop.index }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom">{{ entry.pseudo }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom">{{ entry.turns }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom">
+								<span class="text-base xs:text-lg font-bold">{{ entry.meanAccuracy|number_format(3) }}</span>%
+							</td>
+						</tr>
+
+					{% else %}
+						<tr class="border-b border-grey-200">
+							<td class="pt-5 pb-1 pr-4 align-bottom pl-2">{{ loop.index }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom">{{ entry.pseudo }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom">{{ entry.turns }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom">
+								<span class="text-base xs:text-lg font-bold">{{ entry.meanAccuracy|number_format(3) }}</span>%
+							</td>
+						</tr>
+
+					{% endif %}
+
+				{% endfor %}
+
+
+				{% if  isInLeaderBoard is defined and isInLeaderBoard == false   %}
+					<tr class="border-b border-grey-200">
+						<td class="pt-5 pb-1 pr-4 align-bottom pl-2"></td>
+						<td class="pt-3 pb-1 pr-4 align-bottom">...</td>
+						<td class="pt-3 pb-1 pr-4 align-bottom"></td>
+						<td class="pt-3 pb-1 pr-4 align-bottom">
+							<span class="text-base xs:text-lg font-bold"></span>
+						</td>
+					</tr>
+					<tr class="border-b border-grey-200 bg-purple-50 text-purple-700 font-bold">
+						<td class="pt-5 pb-1 pr-4 align-bottom pl-2">{{ leaderboardPosition }}</td>
+						<td class="pt-3 pb-1 pr-4 align-bottom">{{ app.user.pseudo }}</td>
+						<td class="pt-3 pb-1 pr-4 align-bottom">{{ userTurns }}</td>
+						<td class="pt-3 pb-1 pr-4 align-bottom">
+							<span class="text-base xs:text-lg font-bold">{{ userAccuracy|number_format(3) }}</span>%
+						</td>
+					</tr>
+				{% endif %}
+
+
+			</tbody>
+		</table>
+
+	</div>
+
+
+{% endblock %}

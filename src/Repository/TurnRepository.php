@@ -81,6 +81,19 @@ class TurnRepository extends ServiceEntityRepository
         return (array) $query->getQuery()->getResult();
     }
 
+    public function getLeaderBoard(): array
+    {
+        $query = $this
+            ->createQueryBuilder('t')
+            ->select("u.id, u.pseudo, count(t.id) as turns, avg(t.accuracy) as meanAccuracy")
+            ->join("t.user", 'u')
+            ->groupBy('u')
+            ->addOrderBy('meanAccuracy', 'DESC')
+            ->addOrderBy('u.pseudo', 'ASC');
+
+        return (array) $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Turn[] Returns an array of Turn objects
     //  */

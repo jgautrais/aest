@@ -19,12 +19,56 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class HomeController extends AbstractController
 {
+    private const LEADERBOARD_SIZE = 20;
     /**
      * @Route("/", name="home")
      */
     public function index(): Response
     {
         return $this->render('home/index.html.twig');
+    }
+
+    /**
+     * @Route("/leaderboard", name="leaderboard")
+     */
+    public function leaderboard(TurnRepository $turnRepository): Response
+    {
+        $user = $this->getUser();
+
+        $leaderboard = $turnRepository->getLeaderBoard();
+
+        $parameters = ['leaderboard' => $leaderboard];
+        $parameters['leaderboardSize'] = self::LEADERBOARD_SIZE;
+
+        if (null !== $user) {
+            if (!$user instanceof User) {
+                throw new Exception('User not authenticated');
+            }
+
+            $isInLeaderBoard = false;
+            $leaderboardPosition = 0;
+
+            foreach ($leaderboard as $key => $entry) {
+                if ($key < self::LEADERBOARD_SIZE && $entry['id'] === $user->getId()) {
+                    $isInLeaderBoard = true;
+                } elseif ($entry['id'] === $user->getId()) {
+                    $leaderboardPosition = $key + 1;
+                    $turns = $entry['turns'];
+                    $accuracy = $entry['meanAccuracy'];
+
+                    $parameters['leaderboardPosition'] = $leaderboardPosition;
+                    $parameters['userTurns'] = $turns;
+                    $parameters['userAccuracy'] = $accuracy;
+                }
+
+                $parameters['isInLeaderBoard'] = $isInLeaderBoard;
+            }
+
+            return $this->render('home/leaderboard.html.twig', $parameters);
+        }
+
+
+        return $this->render('home/leaderboard.html.twig', $parameters);
     }
 
     /**
