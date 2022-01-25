@@ -1,4 +1,4 @@
-export default class TurnHelpers {
+export default class UserStatsHelpers {
     constructor() {}
 
     isLogged() {
@@ -13,5 +13,9 @@ export default class TurnHelpers {
         return fetch(
             `/saveTurn/${percentageToGuess}/${userEstimate}/${accuracy}/${accuracyCategory}`
         ).then((res) => res.json());
+    }
+
+    getUserData(period) {
+        return fetch(`/getUserStats/${period}`).then((res) => res.json());
     }
 }
