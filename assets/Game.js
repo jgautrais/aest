@@ -2,9 +2,9 @@ import Area from './Area.js';
 import Board from './Board.js';
 import Helpers from './Helpers.js';
 import Turn from './Turn.js';
-import TurnHelpers from './TurnHelpers.js';
+import UserStatsHelpers from './UserStatsHelpers.js';
 const helpers = new Helpers();
-const turnHelpers = new TurnHelpers();
+const userStatsHelpers = new UserStatsHelpers();
 const $ = require('jquery');
 
 export default class Game {
@@ -27,7 +27,7 @@ export default class Game {
     startGame() {
         this._board.getStartButton().on('click', () => {
             // Check if user is logged in
-            turnHelpers.isLogged().then((bool) => {
+            userStatsHelpers.isLogged().then((bool) => {
                 this._userLogged = bool;
             });
 
@@ -98,7 +98,7 @@ export default class Game {
 
             // If user logged, record turn
             if (this._userLogged) {
-                turnHelpers
+                userStatsHelpers
                     .saveTurn(
                         turn.getPercentageToGuess(),
                         turn.getUserEstimate(),

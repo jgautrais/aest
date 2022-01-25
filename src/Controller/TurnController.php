@@ -6,6 +6,7 @@ use DateTime;
 use Exception;
 use App\Entity\Turn;
 use App\Entity\User;
+use App\Service\HandleUserStats;
 use App\Repository\TurnRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,10 +72,13 @@ class TurnController extends AbstractController
     }
 
     /**
-     * @Route("/getPrecision", name="getPrecision")
+     * @Route("/getUserStats/{period}", name="getUserStats")
      */
-    public function getPrecisionCategories(TurnRepository $turnRepository): Response
-    {
+    public function getUserStats(
+        string $period,
+        TurnRepository $turnRepository,
+        HandleUserStats $handleUserStats
+    ): Response {
         $user = $this->getUser();
 
         if (null === $user) {
@@ -87,8 +91,22 @@ class TurnController extends AbstractController
             throw new Exception('User not authenticated');
         }
 
-        $precisionCategories = $turnRepository->getStatsLastWeek($user);
-        var_dump($precisionCategories);
-        die();
+        $userStats = null;
+
+        if ($period === "all") {
+            $userStats = $turnRepository->getStatsAllTime($user);
+        } elseif ($period === "month") {
+            $userStats = $turnRepository->getStatsLastMonth($user);
+        } elseif ($period === "week") {
+            $userStats = $turnRepository->getStatsLastWeek($user);
+        } else {
+            $userStats = $turnRepository->getStatsToday($user);
+        }
+
+        $userData = $handleUserStats->getUserData($userStats);
+
+        return $this->json(
+            ['stats' => $userData]
+        );
     }
 }
