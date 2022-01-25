@@ -60,6 +60,11 @@ function handleUserStats() {
 
         buttons.forEach((button, index) => {
             button.on('click', () => {
+                if (button.hasClass('userStatsActive')) {
+                    console.log('return');
+                    return;
+                }
+
                 userStatsHelpers.getUserData(periods[index]).then((data) => {
                     $('.userStatsActive').addClass('userStatsInactive');
                     $('.userStatsActive').removeClass('userStatsActive');
