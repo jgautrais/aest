@@ -6,8 +6,11 @@
 
 {% block body %}
 	<div class="relative w-full mx-auto max-w-2xl my-16">
-		<div class="flex justify-between items-center mb-12">
-			<h2 class="text-3xl font-bold text-purple-700 bg-purple-100 rounded pt-2.5 pr-4 leading-none">Leaderboard</h2>
+		<div class="flex flex-col items-start mb-12">
+			<h2 class="text-3xl font-bold text-purple-700 bg-purple-100 rounded pt-2.5 pr-4 leading-none mb-4">Leaderboard</h2>
+			{% if isListed is defined and isListed == false %}
+				<p class="text-sm">Take at least 10 turns to appear in the Leaderboard !</p>
+			{% endif %}
 		</div>
 		{% include "/home/_login_modal.html.twig" %}
 		<table class="w-full text-left table-fixed break-all">
@@ -46,7 +49,7 @@
 				{% endfor %}
 
 
-				{% if  leaderboardPosition is defined and isInLeaderBoard == false   %}
+				{% if  isListed is defined and isListed == true and isInLeaderBoard == false   %}
 					<tr class="border-b border-grey-200">
 						<td class="pt-5 pb-1 pr-4 align-bottom pl-2"></td>
 						<td class="pt-3 pb-1 pr-4 align-bottom">...</td>
