@@ -78,11 +78,9 @@ class HomeController extends AbstractController
      */
     public function profile(TurnRepository $turnRepository, HandleUserStats $handleUserStats): Response
     {
-        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if (null === $user) {
-            return $this->redirectToRoute('login');
-        }
+        $user = $this->getUser();
 
         if (!$user instanceof User) {
             throw new Exception('User not authenticated');
@@ -107,11 +105,9 @@ class HomeController extends AbstractController
         EntityManagerInterface $entityManager,
         MailerInterface $mailer
     ): Response {
-        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if (null === $user) {
-            return $this->redirectToRoute('login');
-        }
+        $user = $this->getUser();
 
         if (!$user instanceof User) {
             throw new Exception('User not authenticated');
@@ -170,9 +166,11 @@ class HomeController extends AbstractController
      */
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $user = $this->getUser();
 
-        if (null === $user || !$user instanceof User) {
+        if (!$user instanceof User) {
             throw new Exception('User not authenticated');
         }
 
