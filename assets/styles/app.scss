@@ -57,6 +57,15 @@ input {
     }
 }
 
+.hint {
+    top: 110px;
+    left: 45px;
+    @media (hover: none) and (max-width: $mobile) {
+        top: 2.5rem;
+        left: -30px;
+    }
+}
+
 .area_cell {
     width: 5%;
     height: 5%;
