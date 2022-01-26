@@ -13,6 +13,10 @@ input {
     top: -4rem;
 }
 
+.description {
+    max-width: 21rem;
+}
+
 .area_border {
     @media (hover: none) and (max-width: $mobile) {
         margin-top: 1.7rem;
@@ -53,9 +57,18 @@ input {
     }
 }
 
+.hint {
+    top: 110px;
+    left: 45px;
+    @media (hover: none) and (max-width: $mobile) {
+        top: 2.5rem;
+        left: -30px;
+    }
+}
+
 .area_cell {
-    width: 10%;
-    height: 10%;
+    width: 5%;
+    height: 5%;
 }
 
 .button-disabled {

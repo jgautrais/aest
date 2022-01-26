@@ -88,6 +88,7 @@ class TurnRepository extends ServiceEntityRepository
             ->select("u.id, u.pseudo, count(t.id) as turns, avg(t.accuracy) as meanAccuracy")
             ->join("t.user", 'u')
             ->groupBy('u')
+            ->having("turns >= 10")
             ->addOrderBy('meanAccuracy', 'DESC')
             ->addOrderBy('u.pseudo', 'ASC');
 

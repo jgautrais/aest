@@ -25,6 +25,7 @@ export default class Board {
     _statsPrecision0Count = $('#statsPrecision0Count');
     _statsPrecision1Count = $('#statsPrecision1Count');
     _statsPrecision2Count = $('#statsPrecision2Count');
+    _hint = $('#hint');
 
     constructor() {}
 
@@ -75,6 +76,9 @@ export default class Board {
         helpers.enableButton(this._inputSubmit);
 
         this._inputValue.focus();
+        if (window.matchMedia('(hover: hover)').matches) {
+            this._hint.hide();
+        }
     }
 
     handleFormSubmit() {
@@ -94,6 +98,9 @@ export default class Board {
         helpers.enableButton(this._endButton);
         this._startButton.focus();
         this._inputForm.off();
+        if (window.matchMedia('(hover: hover)').matches) {
+            this._hint.show();
+        }
     }
 
     setBgColor(precisionCategory) {
