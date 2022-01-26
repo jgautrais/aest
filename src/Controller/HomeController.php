@@ -60,9 +60,8 @@ class HomeController extends AbstractController
                     $parameters['userTurns'] = $turns;
                     $parameters['userAccuracy'] = $accuracy;
                 }
-
-                $parameters['isInLeaderBoard'] = $isInLeaderBoard;
             }
+            $parameters['isInLeaderBoard'] = $isInLeaderBoard;
 
             return $this->render('home/leaderboard.html.twig', $parameters);
         }
