@@ -30,6 +30,11 @@ function handleLoginModal() {
     const loginModal = $('#login-modal');
     const loginModalHide = $('#login-modal-hide');
     const loginIcon = $('#login-icon');
+    const hintLogin = $('#hint-login');
+
+    hintLogin.on('click', () => {
+        window.location.assign('/login');
+    });
 
     loginIcon.on('click', () => {
         if (loginModal.hasClass('hidden')) {
