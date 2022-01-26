@@ -3,8 +3,8 @@ const helpers = new Helpers();
 const $ = require('jquery');
 
 export default class Area {
-    _rows = 10;
-    _columns = 10;
+    _rows = 20;
+    _columns = 20;
     _area = $('#areaContainer');
 
     constructor() {
@@ -36,7 +36,7 @@ export default class Area {
      */
     fillArea(fillValue) {
         const cells = $('.area_cell');
-        for (let i = 0; i < fillValue; i++) {
+        for (let i = 0; i < fillValue * 4; i++) {
             const id = helpers.getRandomNum(0, cells.length - 1);
             cells.eq(id).addClass('bg-black');
             cells.splice(id, 1);
