@@ -12,7 +12,7 @@
 			<a href="{{ path('app_logout') }}" class="text-sm text-red-700 block inline-flex justify-center rounded-md shadow-sm border border-red-600 px-4 py-2 bg-white hover:text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Log out</a>
 		</div>
 
-		<a href="{{ path('profile_edit', {'id': user.id}) }}" class="mt-5 text-gray-800 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Update your profile</a>
+		<a href="{{ path('profile_edit') }}" class="mt-5 text-gray-800 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Update your profile</a>
 
 		{% for category, messages in app.flashes %}
 			{% for message in messages %}

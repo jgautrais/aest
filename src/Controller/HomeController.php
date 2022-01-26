@@ -97,16 +97,23 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/profile/{id}/edit", name="profile_edit")
+     * @Route("/profile/edit", name="profile_edit")
      */
     public function profileEdit(
         Request $request,
-        User $user,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager,
         MailerInterface $mailer
     ): Response {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+
+        if (null === $user) {
+            return $this->redirectToRoute('login');
+        }
+
+        if (!$user instanceof User) {
+            throw new Exception('User not authenticated');
+        }
 
         $form = $this->createForm(ProfileEditFormType::class, $user);
         $form->handleRequest($request);
@@ -114,11 +121,8 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $currentPassword = $form->get('confirmPassword')->getData();
-            if (!is_string($currentPassword)) {
-                throw new Exception('Password is not of type string');
-            }
 
-            $isPasswordValid = $userPasswordHasher->isPasswordValid($user, $currentPassword);
+            $isPasswordValid = $this->checkCurrentPassword($currentPassword, $user, $userPasswordHasher);
 
             if (!$isPasswordValid) {
                 $errorConfirmation = 'Wrong password';
@@ -129,17 +133,7 @@ class HomeController extends AbstractController
             }
 
             $plainPassword = $form->get('plainPassword')->getData();
-            if (null != $plainPassword) {
-                if (!is_string($plainPassword)) {
-                    throw new Exception('Password is not of type string');
-                }
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $plainPassword
-                    )
-                );
-            }
+            $this->handleNewPasswodRequest($plainPassword, $user, $userPasswordHasher);
 
             $entityManager->flush();
 
@@ -174,6 +168,12 @@ class HomeController extends AbstractController
      */
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+
+        if (null === $user || !$user instanceof User) {
+            throw new Exception('User not authenticated');
+        }
+
         if (!is_string($request->request->get('_token'))) {
             throw new Exception('Token not available');
         }
@@ -187,5 +187,35 @@ class HomeController extends AbstractController
         $session->invalidate();
 
         return $this->redirectToRoute('home');
+    }
+
+    private function checkCurrentPassword(
+        mixed $currentPassword,
+        User $user,
+        UserPasswordHasherInterface $userPasswordHasher
+    ): bool {
+        if (!is_string($currentPassword)) {
+            throw new Exception('Password is not of type string');
+        }
+
+        return $userPasswordHasher->isPasswordValid($user, $currentPassword);
+    }
+
+    private function handleNewPasswodRequest(
+        mixed $plainPassword,
+        User $user,
+        UserPasswordHasherInterface $userPasswordHasher
+    ): void {
+        if (null != $plainPassword) {
+            if (!is_string($plainPassword)) {
+                throw new Exception('Password is not of type string');
+            }
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $plainPassword
+                )
+            );
+        }
     }
 }
