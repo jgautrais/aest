@@ -45,12 +45,13 @@ class HomeController extends AbstractController
                 throw new Exception('User not authenticated');
             }
 
+            $isListed = false;
             $isInLeaderBoard = false;
-            $leaderboardPosition = 0;
 
             foreach ($leaderboard as $key => $entry) {
                 if ($key < self::LEADERBOARD_SIZE && $entry['id'] === $user->getId()) {
                     $isInLeaderBoard = true;
+                    $isListed = true;
                 } elseif ($entry['id'] === $user->getId()) {
                     $leaderboardPosition = $key + 1;
                     $turns = $entry['turns'];
@@ -59,10 +60,11 @@ class HomeController extends AbstractController
                     $parameters['leaderboardPosition'] = $leaderboardPosition;
                     $parameters['userTurns'] = $turns;
                     $parameters['userAccuracy'] = $accuracy;
+                    $isListed = true;
                 }
-
-                $parameters['isInLeaderBoard'] = $isInLeaderBoard;
             }
+            $parameters['isListed'] = $isListed;
+            $parameters['isInLeaderBoard'] = $isInLeaderBoard;
 
             return $this->render('home/leaderboard.html.twig', $parameters);
         }
