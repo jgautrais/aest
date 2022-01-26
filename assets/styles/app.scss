@@ -13,6 +13,10 @@ input {
     top: -4rem;
 }
 
+.description {
+    max-width: 21rem;
+}
+
 .area_border {
     @media (hover: none) and (max-width: $mobile) {
         margin-top: 1.7rem;
