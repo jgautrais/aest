@@ -168,6 +168,12 @@ class HomeController extends AbstractController
      */
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+
+        if (null === $user || !$user instanceof User) {
+            throw new Exception('User not authenticated');
+        }
+
         if (!is_string($request->request->get('_token'))) {
             throw new Exception('Token not available');
         }

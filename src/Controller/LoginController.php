@@ -24,6 +24,12 @@ class LoginController extends AbstractController
      */
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
+        $user = $this->getUser();
+
+        if (null !== $user) {
+            return $this->redirectToRoute('profile');
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
 
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -54,6 +60,12 @@ class LoginController extends AbstractController
         EntityManagerInterface $entityManager,
         MailerInterface $mailer
     ): Response {
+        $currentUser = $this->getUser();
+
+        if (null !== $currentUser) {
+            return $this->redirectToRoute('profile');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
