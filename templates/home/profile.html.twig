@@ -7,9 +7,9 @@
 {% block body %}
 	<div class="relative w-full mx-auto max-w-2xl mt-16">
 		<div class="flex justify-between items-center">
-			<h2 class="text-3xl font-bold text-indigo-700 bg-indigo-100 rounded pt-2.5 pr-4 leading-none">{{ user.pseudo }}</h2>
+			<h2 class="text-3xl font-bold text-indigo-700 bg-indigo-100 rounded pt-2.5 pr-4 leading-none break-all">{{ user.pseudo }}</h2>
 
-			<a href="{{ path('app_logout') }}" class="text-sm text-red-700 block inline-flex justify-center rounded-md shadow-sm border border-red-600 px-4 py-2 bg-white hover:text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Log out</a>
+			<a href="{{ path('app_logout') }}" class="text-sm text-red-700 block inline-flex justify-center rounded-md shadow-sm border border-red-600 px-4 py-2 bg-white hover:text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 flex-shrink-0 ml-4">Log out</a>
 		</div>
 
 		<a href="{{ path('profile_edit') }}" class="mt-5 text-gray-800 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Update your profile</a>
@@ -23,23 +23,24 @@
 		{% endfor %}
 
 		<div class="mt-16">
-			<h3 class="text-3xl font-bold">Your stats</h3>
+			<h3 class="text-3xl font-bold text-gray-800">Your stats</h3>
 			<p class="text-gray-700 mt-4 mb-2">
-				<span class="inline-block font-bold w-36">Games played:
+				<span class="inline-block font-bold w-40">Games played:
 				</span>
 				<span class="text-black" id="userTurns">{{ user.gameCount }}</span>
 			</p>
-			<p class="text-gray-700 mt-4 mb-2">
-				<span class="inline-block font-bold w-36">Turns played:
+			<p class="text-gray-700 mt-3 mb-4">
+				<span class="inline-block font-bold w-40">Turns played:
 				</span>
 				<span class="text-black" id="userTurns">{{ stats.turns }}</span>
 			</p>
 			<p class="text-gray-700">
-				<span class="inline-block font-bold w-36">Mean accuracy:
+				<span class="inline-block font-bold w-40">Avg difference:
 				</span>
-				<span class="text-black text-lg font-bold">{{ stats.meanAccuracy }}</span>%
+				<span class="text-black text-lg font-bold">{{ stats.meanAccuracy }}</span>
+				<span class="text-blue-700">%</span>
 			</p>
-			<p class="mt-10 font-bold">Accuracy details</p>
+			<p class="mt-12 font-bold text-lg text-gray-800">Accuracy details</p>
 			<div class="flex flex-wrap">
 				<button type="button" class="userStatsActive mr-2 mt-2 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="userPrecisionAll">All time</button>
 				<button type="button" class="userStatsInactive mr-2 mt-2 text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="userPrecisionMonth">Last 30 Days</button>
@@ -48,40 +49,40 @@
 			</div>
 			<div class="flex text-xs pt-3 items-baseline text-gray-700">
 				<p class="mr-4">
-					<span class="inline-block font-bold w-24">Turns played:
+					<span class="inline-block font-bold w-16">Turns
+						<br>played:
 					</span>
 					<span class="text-black" id="userStatsPrecisionTurns">{{ stats.turns }}</span>
 				</p>
-				<span class="block">|</span>
+				<span class="ml-4 block">|</span>
 				<p class="ml-4">
-					<span class="inline-block font-bold w-28">Mean accuracy:
-					</span>
-					<span class="text-black text-base font-bold" id="userStatsPrecisionAccuracy">{{ stats.meanAccuracy }}</span>%
+					<span class="inline-block font-bold w-24">Avg
+						<br>difference:</span>
+					<span class="text-black text-base font-bold" id="userStatsPrecisionAccuracy">{{ stats.meanAccuracy }}</span>
+					<span class="text-blue-700">%</span>
+				</p>
+			</p>
+		</div>
+		<div class="text-xs border-l-2 border-black flex-grow mt-3 mb-2 flex justify-between w-5/6">
+			<div class="w-5/6">
+				<p class="bg-green-500 my-4 py-1" id="userStatsPrecision0Percentage" style="width:{{ stats.precision0.width }}%">
+					<span class="pl-4">&lt;&nbsp;5%</span>
+				</p>
+				<p class="bg-yellow-300 my-4 py-1" id="userStatsPrecision1Percentage" style="width:{{ stats.precision1.width }}%">
+					<span class="pl-4">&lt;&nbsp;10%</span>
+				</p>
+				<p class="bg-red-500 my-4 py-1" id="userStatsPrecision2Percentage" style="width:{{ stats.precision2.width }}%">
+					<span class="pl-4">&gt;=10%</span>
 				</p>
 			</div>
-			<div class="text-xs border-l-2 border-black flex-grow mt-3 mb-2 flex justify-between w-5/6">
-				<div class="w-5/6">
-					<p class="bg-green-500 my-4 py-1" id="userStatsPrecision0Percentage" style="width:{{ stats.precision0.width }}%">
-						<span class="pl-4">&lt;&nbsp;5%</span>
-					</p>
-					<p class="bg-yellow-300 my-4 py-1" id="userStatsPrecision1Percentage" style="width:{{ stats.precision1.width }}%">
-						<span class="pl-4">&lt;&nbsp;10%</span>
-					</p>
-					<p class="bg-red-500 my-4 py-1" id="userStatsPrecision2Percentage" style="width:{{ stats.precision2.width }}%">
-						<span class="pl-4">&gt;=10%</span>
-					</p>
-				</div>
-				<div class="w-1/6">
-					<p class="font-bold text-gray-800 my-4 pl-4 py-1" id="userStatsPrecision0Count">{{ stats.precision0.turns }}</p>
-					<p class="font-bold text-gray-800 my-4 pl-4 py-1" id="userStatsPrecision1Count">{{ stats.precision1.turns }}</p>
-					<p class="font-bold text-gray-800 my-4 pl-4 py-1" id="userStatsPrecision2Count">{{ stats.precision2.turns }}</p>
-				</div>
+			<div class="w-1/6">
+				<p class="font-bold text-gray-800 my-4 pl-4 py-1" id="userStatsPrecision0Count">{{ stats.precision0.turns }}</p>
+				<p class="font-bold text-gray-800 my-4 pl-4 py-1" id="userStatsPrecision1Count">{{ stats.precision1.turns }}</p>
+				<p class="font-bold text-gray-800 my-4 pl-4 py-1" id="userStatsPrecision2Count">{{ stats.precision2.turns }}</p>
 			</div>
 		</div>
-
-		<a href="{{ path('home') }}" class="my-16 text-white text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Back to the game</a>
-
 	</div>
 
+	<a href="{{ path('home') }}" class="mt-20 mb-16 text-white text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2.5 bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Back to the game</a>
 
-{% endblock %}
+</div>{% endblock %}

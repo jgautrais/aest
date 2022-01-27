@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Aest - Leaderboard
+{% endblock %}
+
+{% block body %}
+	<div class="relative w-full mx-auto max-w-2xl my-16">
+		<div class="flex flex-col items-start mb-12">
+			<h2 class="text-3xl font-bold text-purple-700 bg-purple-100 rounded pt-2.5 pr-4 leading-none mb-4">About</h2>
+		</div>
+		{% include "/home/_login_modal.html.twig" %}
+		<div class="max-w-md md:max-w-lg">
+			<p class="text-sm md:text-base pb-2">Aest is a game where the objective is to estimate accurately a percentage of area. The goal is to provide an estimate with the lowest difference possible with the actual value.
+			</p>
+			<p class="text-sm md:text-base pb-2">A difference
+				<span class="inline-block pt-0.5 px-1.5 bg-green-100 text-green-800 rounded leading-6">&lt;5%</span>
+				is considered good, a difference
+				<span class="inline-block pt-0.5 px-1.5 bg-yellow-100 text-yellow-800 rounded leading-6">&lt;10%</span>
+				is still considered reasonable while any difference
+				<span class="inline-block pt-0.5 px-1.5 bg-red-100 text-red-800 rounded leading-6">&gt;10%</span>
+				is not acceptable.
+			</p>
+			<p class="text-sm md:text-base pb-2 mt-8">I got the idea of this game from an old training tool,
+				<a href="https://www.apsnet.org/publications/plantdisease/backissues/Documents/1988Articles/PlantDisease72n05_455.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline hover:text-blue-600">DISTRAIN</a>. This tool was aimed at people assessing fungal diseases of cereals in field trials.
+				<br>
+				This program was simulating foliar disease infections so that new people could be trained to estimate accurately percentages of disease severity.
+				<br>
+				Once in field, one could be more confident and more accurate in evaluating diseases in trials.
+			</p>
+			<p class="mt-8">Aest game is more limited than such tool since it is not simulating realistic leaf forms and disease coverings.
+				<br>
+				While leaf forms could be rendered fairly easily with CSS/JavaScript, realistic diseases patterns would require a much complex script.
+				<br>
+				Still I hope you will enjoy this small game 😀!
+			</p>
+		</div>
+		<a href="{{ path('home') }}" class="mt-12 mb-12 text-white text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2.5 bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Back to the game</a>
+	</div>
+
+
+{% endblock %}
