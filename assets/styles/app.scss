@@ -13,8 +13,22 @@ input {
     top: -4rem;
 }
 
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #cbd5e1;
+}
+
 .description {
     max-width: 21rem;
+}
+
+.hint-game {
+    @media (max-width: 639px) {
+        top: -1rem;
+    }
 }
 
 .area_border {

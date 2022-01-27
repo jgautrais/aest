@@ -31,9 +31,14 @@ function handleLoginModal() {
     const loginModalHide = $('#login-modal-hide');
     const loginIcon = $('#login-icon');
     const hintLogin = $('#hint-login');
+    const hintLeaderboard = $('#hint-leaderboard');
 
     hintLogin.on('click', () => {
         window.location.assign('/login');
+    });
+
+    hintLeaderboard.on('click', () => {
+        hintLeaderboard.fadeOut();
     });
 
     loginIcon.on('click', () => {

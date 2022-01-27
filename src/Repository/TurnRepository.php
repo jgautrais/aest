@@ -89,7 +89,7 @@ class TurnRepository extends ServiceEntityRepository
             ->join("t.user", 'u')
             ->groupBy('u')
             ->having("turns >= 10")
-            ->addOrderBy('meanAccuracy', 'DESC')
+            ->addOrderBy('meanAccuracy', 'ASC')
             ->addOrderBy('u.pseudo', 'ASC');
 
         return (array) $query->getQuery()->getResult();
