@@ -25,12 +25,6 @@ input {
     max-width: 21rem;
 }
 
-.hint-game {
-    @media (max-width: 639px) {
-        top: -1rem;
-    }
-}
-
 .area_border {
     @media (hover: none) and (max-width: $mobile) {
         margin-top: 1.7rem;
@@ -80,6 +74,13 @@ input {
     }
 }
 
+.hint-login {
+    top: -5.3rem;
+    @media (max-width: 639px) {
+        top: -2.3rem;
+    }
+}
+
 .area_cell {
     width: 5%;
     height: 5%;
@@ -90,9 +91,9 @@ input {
 }
 
 .userStatsActive {
-    @apply bg-gray-700 text-white hover:bg-gray-600;
+    @apply bg-blue-600 text-white hover:bg-blue-500;
 }
 
 .userStatsInactive {
-    @apply bg-white text-gray-700 hover:bg-gray-50;
+    @apply bg-white text-gray-800 hover:bg-blue-50;
 }
