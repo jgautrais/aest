@@ -29,7 +29,8 @@ export default class Game {
             // Check if user is logged in
             userStatsHelpers.isLogged().then((bool) => {
                 this._userLogged = bool;
-                if (bool && this._turnCount === 0) {
+                console.log(bool, this._turnCount);
+                if (bool && this._turnCount === 1) {
                     userStatsHelpers.incrementGameCount();
                 }
             });
