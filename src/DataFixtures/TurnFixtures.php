@@ -12,13 +12,13 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 class TurnFixtures extends Fixture implements DependentFixtureInterface
 {
     private const TURNS = 10000;
-    private const ACCURACY_HIGH = 95;
-    private const ACCURACY_MIDDLE = 90;
+    private const ACCURACY_HIGH = 5;
+    private const ACCURACY_MIDDLE = 10;
 
     public function load(ObjectManager $manager): void
     {
         $min = strtotime("21-12-11");
-        $max = strtotime("22-02-25");
+        $max = strtotime("22-01-27");
 
         for ($i = 0; $i < self::TURNS; $i++) {
             $turn = new Turn();
@@ -32,11 +32,11 @@ class TurnFixtures extends Fixture implements DependentFixtureInterface
             $turn->setArea($area);
             $turn->setEstimate($estimate);
 
-            $accuracy = 100 - abs($area - $estimate);
+            $accuracy = abs($area - $estimate);
             $accuracyCategory = null;
-            if ($accuracy > self::ACCURACY_HIGH) {
+            if ($accuracy < self::ACCURACY_HIGH) {
                 $accuracyCategory = 0;
-            } elseif ($accuracy > self::ACCURACY_MIDDLE) {
+            } elseif ($accuracy < self::ACCURACY_MIDDLE) {
                 $accuracyCategory = 1;
             } else {
                 $accuracyCategory = 2;
