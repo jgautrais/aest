@@ -32,7 +32,7 @@ class TurnFixtures extends Fixture implements DependentFixtureInterface
             $turn->setArea($area);
             $turn->setEstimate($estimate);
 
-            $accuracy = 100 - abs($area - $estimate);
+            $accuracy = abs($area - $estimate);
             $accuracyCategory = null;
             if ($accuracy > self::ACCURACY_HIGH) {
                 $accuracyCategory = 0;
