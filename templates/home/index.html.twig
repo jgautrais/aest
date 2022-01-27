@@ -6,90 +6,125 @@
 
 {% block body %}
 	<div class="text-center font-bold mb-5 sm:mb-8">
-		<h2 class=" mt-3 text-lg sm:text-xl text-gray-400">
+		<h2 class=" mt-1 text-lg sm:text-xl text-gray-400">
 			Area estimation tool
 		</h2>
 		<h3 class="description text-sm text-gray-500 sm:w-80 mt-12 mx-5">
-			Try to guess the percentage of black squares cover in the area below
+			Try to guess the percentage of black squares cover in the area below.
+			<br>
+			<a href="{{ path('about') }}" class="text-purple-600 underline">Learn more&nearr;</a>
 		</h3>
 	</div>
 	{% include "/home/_login_modal.html.twig" %}
-	<div class="relative flex-grow max-w-2xl w-full flex flex-col md:flex-row items-center md:justify-around md:items-start">
-
-		<div class="area_border relative border-2 border-black">
-			<p class="absolute pb-4 text-sm hidden" id="turnCounter">Turn&nbsp;
-				<span id="turnCount"></span>
-			</p>
-			<table class="area_container w-full h-full" id="areaContainer"></table>
-			<p class="absolute text-red-700 text-xs py-0.5 px-1 bg-red-100 mt-1 mx-auto hidden" id="turnError">Error, turn not recorded
-			</p>
-			<div class="hint hidden text-sm font-bold absolute bg-white px-3 py-2 w-52 text-center border-8 border-purple-500 shadow-xl" id="hint">Hit enter to start next turn !</div>
-			<div class="stats_container absolute hidden w-full h-full bg-white py-4 px-8" id="stats">
-				<div class="flex flex-col h-full">
-					<div class="text-center">
-						<p class="text-3xl mb-0.5">Game
-							<span id="statsGameCount"></span>
-						</p>
-						<p>
-							<span id="statsTurnCount" class="font-bold text-lg"></span>
-						</p>
-						<p class="mt-2 text-xs">Accuracy:
-							<span id="statsAccuracy" class="font-bold text-xl"></span>
-							%
-						</p>
-					</div>
-					<div class="text-xs border-l-2 border-black flex-grow mt-3.5 mb-2 flex justify-between">
-						<div class="w-5/6">
-							<p class="bg-green-500 my-4 py-1" id="statsPrecision0Percentage">
-								<span class="pl-4">&lt;&nbsp;5%</span>
+	<div class="relative flex-grow max-w-2xl w-full">
+		<div class="flex flex-col md:flex-row items-center md:justify-around md:items-start">
+			<div class="area_border relative border-2 border-black">
+				<p class="absolute pb-4 text-sm hidden" id="turnCounter">Turn&nbsp;
+					<span id="turnCount"></span>
+				</p>
+				<table class="area_container w-full h-full" id="areaContainer"></table>
+				<p class="absolute text-red-700 text-xs py-0.5 px-1 bg-red-100 mt-1 mx-auto hidden" id="turnError">Error, turn not recorded
+				</p>
+				<div class="hint hidden text-sm font-bold absolute bg-white px-3 py-2.5 w-52 text-center border-8 border-purple-500 shadow-xl" id="hint">Hit ENTER to start next turn !</div>
+				<div class="stats_container absolute hidden w-full h-full bg-white py-4 px-8" id="stats">
+					<div class="flex flex-col h-full">
+						<div class="text-center">
+							<p class="text-3xl mb-0.5">Game
+								<span id="statsGameCount"></span>
 							</p>
-							<p class="bg-yellow-300 my-4 py-1" id="statsPrecision1Percentage">
-								<span class="pl-4">&lt;&nbsp;10%</span>
+							<p>
+								<span id="statsTurnCount" class="font-bold text-lg"></span>
 							</p>
-							<p class="bg-red-500 my-4 py-1" id="statsPrecision2Percentage">
-								<span class="pl-4">&gt;=10%</span>
+							<p class="mt-2 text-xs">Avg Difference:
+								<span id="statsAccuracy" class="font-bold text-xl"></span>
+								%
 							</p>
 						</div>
-						<div class="w-1/6">
-							<p class="my-4 pl-4 py-1" id="statsPrecision0Count"></p>
-							<p class="my-4 pl-4 py-1" id="statsPrecision1Count"></p>
-							<p class="my-4 pl-4 py-1" id="statsPrecision2Count"></p>
+						<div class="text-xs border-l-2 border-black flex-grow mt-3.5 mb-2 flex justify-between">
+							<div class="w-5/6">
+								<p class="bg-green-500 my-4 py-1" id="statsPrecision0Percentage">
+									<span class="pl-4">&lt;&nbsp;5%</span>
+								</p>
+								<p class="bg-yellow-300 my-4 py-1" id="statsPrecision1Percentage">
+									<span class="pl-4">&lt;&nbsp;10%</span>
+								</p>
+								<p class="bg-red-500 my-4 py-1" id="statsPrecision2Percentage">
+									<span class="pl-4">&gt;=10%</span>
+								</p>
+							</div>
+							<div class="w-1/6">
+								<p class="my-4 pl-4 py-1" id="statsPrecision0Count"></p>
+								<p class="my-4 pl-4 py-1" id="statsPrecision1Count"></p>
+								<p class="my-4 pl-4 py-1" id="statsPrecision2Count"></p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<div class="relative board_container mt-6 md:mt-0 flex flex-col items-center" id="board">
+				<div class="my-4">
+					<button type="button" class="text-sm text-white bg-black px-4 py-3 hover:bg-gray-700" id="startButton">
+						Start Game !
+					</button>
+					<button type="button" class="hidden absolute right-0 top-4 text-sm text-white button-disabled px-4 py-3 hover:bg-gray-700" id="endButton">
+						End
+					</button>
+				</div>
+				<form id="inputForm" class="text-sm flex flex-col items-center mt-2">
+					<label for="inputValue">Blackened area in %:</label>
+					<input type="text" inputmode="numeric" pattern="[0-9]*" id="inputValue" class="mt-3 mb-4 bg-gray-100 text-center py-2 px-2 w-16 rounded" disabled/>
+					<input type="submit" value="Submit" id="inputSubmit" class="text-sm text-white px-3 py-2 cursor-pointer hover:bg-gray-700 button-disabled" disabled/>
+				</form>
+				<div id="boardScore" class="hidden text-sm mt-6 py-2 px-4 bg-white">
+					<p>
+						<span class="inline-block w-36">Your estimate :
+						</span>
+						<b id="scoreEstimate"></b>
+						%
+					</p>
+					<p>
+						<span class="inline-block w-36">Actual is :
+						</span>
+						<b id="scoreTarget"></b>
+						%
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="hint-game relative flex flex-col mt-12 sm:mt-28 mb-16">
+			<p class=" text-xs text-gray-600 mx-5 ">After starting a game, hit
+				<span class="inline-block pb-0.25 pt-0.5 px-1.5 bg-black text-white rounded leading-6">End</span>
+				to stop and get stats about your estimates.</p>
+
+			{% if app.user != null %}
+				<p class=" text-xs text-gray-500 mx-5 mt-4 sm:mt-2 leading-5">Go to your
+					<a href="{{ path('profile') }}">
+						<span class="text-purple-400 hover:underline">profile</span>
+						<span class="inline relative bottom-0.5 bg-gray-100 mr-1 py-1 rounded">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 20 20" fill="#374151" class="inline pl-1.5">
+								<title>
+									user avatar
+								</title>
+								<path d="M10 12.5c-5.92 0-9 3.5-9 5.5v1h18v-1c0-2-3.08-5.5-9-5.5z"/>
+								<circle cx="10" cy="6" r="5"/>
+							</svg>
+						</a>
+					</span>to look over the stats for your whole turns history.
+				</p>
+			{% endif %}
+
+			{% if app.user == null %}
+				<div class="hint-login absolute w-full flex justify-center">
+					<p class="flex font-bold mx-auto text-purple-400 text-xs justify-center rounded-md border border-purple-200 shadow-sm px-2 py-1 bg-purple-100 cursor-pointer" id="hint-login">
+						Log in to save your progress
+					</p>
+				</div>
+
+			{% endif %}
+
 		</div>
 
-		<div class="relative board_container mt-6 md:mt-0 flex flex-col items-center" id="board">
-			<div class="my-4">
-				<button type="button" class="text-sm text-white bg-black px-4 py-3 hover:bg-gray-700" id="startButton">
-					Start Game !
-				</button>
-				<button type="button" class="hidden absolute right-0 top-4 text-sm text-white button-disabled px-4 py-3 hover:bg-gray-700" id="endButton">
-					End
-				</button>
-			</div>
-			<form id="inputForm" class="text-sm flex flex-col items-center mt-2">
-				<label for="inputValue">Blackened area in %:</label>
-				<input type="text" inputmode="numeric" pattern="[0-9]*" id="inputValue" class="mt-3 mb-4 bg-gray-100 text-center py-2 px-2 w-16 rounded" disabled/>
-				<input type="submit" value="Submit" id="inputSubmit" class="text-sm text-white px-3 py-2 cursor-pointer hover:bg-gray-700 button-disabled" disabled/>
-			</form>
-			<div id="boardScore" class="hidden text-sm mt-6 py-2 px-4 bg-white">
-				<p>
-					<span class="inline-block w-36">Your estimate :
-					</span>
-					<b id="scoreEstimate"></b>
-					%
-				</p>
-				<p>
-					<span class="inline-block w-36">Actual is :
-					</span>
-					<b id="scoreTarget"></b>
-					%
-				</p>
-			</div>
-		</div>
+
 	</div>
-
-
 {% endblock %}

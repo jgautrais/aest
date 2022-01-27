@@ -21,7 +21,7 @@ class HomeController extends AbstractController
 {
     private const LEADERBOARD_SIZE = 20;
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="home", methods={"GET"})
      */
     public function index(): Response
     {
@@ -29,7 +29,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/leaderboard", name="leaderboard")
+     * @Route("/leaderboard", name="leaderboard", methods={"GET"})
      */
     public function leaderboard(TurnRepository $turnRepository): Response
     {
@@ -74,7 +74,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/profile", name="profile")
+     * @Route("/profile", name="profile", methods={"GET"})
      */
     public function profile(TurnRepository $turnRepository, HandleUserStats $handleUserStats): Response
     {
@@ -97,7 +97,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/profile/edit", name="profile_edit")
+     * @Route("/profile/edit", name="profile_edit", methods={"GET", "POST"})
      */
     public function profileEdit(
         Request $request,
@@ -187,6 +187,14 @@ class HomeController extends AbstractController
         $session->invalidate();
 
         return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/about", name="about", methods={"GET"})
+     */
+    public function about(): Response
+    {
+        return $this->render('home/about.html.twig');
     }
 
     private function checkCurrentPassword(

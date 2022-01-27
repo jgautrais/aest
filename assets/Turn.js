@@ -11,7 +11,7 @@ export default class Turn {
 
     getAccuracy() {
         this._diff = Math.abs(this._userEstimate - this._percentageToGuess);
-        return 100 - this._diff;
+        return this._diff;
     }
 
     getPrecisionCategory() {
