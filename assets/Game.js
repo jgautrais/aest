@@ -29,6 +29,9 @@ export default class Game {
             // Check if user is logged in
             userStatsHelpers.isLogged().then((bool) => {
                 this._userLogged = bool;
+                if (bool) {
+                    userStatsHelpers.incrementGameCount();
+                }
             });
 
             // Clears turn logging error of previous turn if any
@@ -47,10 +50,6 @@ export default class Game {
         });
 
         this._board.getEndButton().on('click', () => {
-            if (this._userLogged) {
-                userStatsHelpers.incrementGameCount();
-            }
-
             this._board.handleGameEnd(
                 this._gameCount,
                 this._turnCount,
