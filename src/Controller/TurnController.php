@@ -33,7 +33,12 @@ class TurnController extends AbstractController
     }
 
     /**
-     * @Route("/saveTurn/{area}/{estimate}/{accuracy}/{accuracyCategory}/", name="saveTurn")
+     * @Route("/saveTurn/{area}/{estimate}/{accuracy}/{accuracyCategory}/",
+     * name="saveTurn",
+     * requirements={
+     * "area"="([0-9]|[1-9][0-9]|100)",
+     * "estimate"="([0-9]|[1-9][0-9]|100)",
+     * "accuracy"="([0-9]|[1-9][0-9]|100)"})
      */
     public function saveTurn(
         int $area,
@@ -42,13 +47,9 @@ class TurnController extends AbstractController
         int $accuracyCategory,
         EntityManagerInterface $entityManager
     ): Response {
-        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if (null === $user) {
-            return $this->json(
-                ['success' => false]
-            );
-        }
+        $user = $this->getUser();
 
         if (!$user instanceof User) {
             throw new Exception('User not authenticated');
@@ -76,13 +77,9 @@ class TurnController extends AbstractController
      */
     public function incrementGameCount(EntityManagerInterface $entityManager): Response
     {
-        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if (null === $user) {
-            return $this->json(
-                ['success' => false]
-            );
-        }
+        $user = $this->getUser();
 
         if (!$user instanceof User) {
             throw new Exception('User not authenticated');
@@ -96,22 +93,17 @@ class TurnController extends AbstractController
         );
     }
 
-
     /**
-     * @Route("/getUserStats/{period}", name="getUserStats")
+     * @Route("/getUserStats/{period}", name="getUserStats", requirements={"period"="(all|month|week|day)"})
      */
     public function getUserStats(
         string $period,
         TurnRepository $turnRepository,
         HandleUserStats $handleUserStats
     ): Response {
-        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if (null === $user) {
-            return $this->json(
-                ['success' => false]
-            );
-        }
+        $user = $this->getUser();
 
         if (!$user instanceof User) {
             throw new Exception('User not authenticated');
