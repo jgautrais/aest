@@ -53,17 +53,6 @@
 				</svg>
 			</a>
 
-			{% if app.user == null and app.request.pathinfo == '/' %}
-				<div class="absolute mt-14" id="hint-leaderboard">
-					<div class="absolute arrow-up ml-4"></div>
-					<p class="mt-2.5 flex font-bold absolute mx-auto text-gray-500 text-xs justify-center rounded-md border border-gray-300 shadow-sm px-2 py-1 bg-gray-200 cursor-default">
-						Leaderboard
-					</p>
-				</div>
-
-			{% endif %}
-
-
 			<a href="{{ path('home') }}">
 				<h1 class="mx-auto text-4xl sm:text-5xl text-gray-700 max-w-min pt-1.5">Aest</h1>
 			</a>

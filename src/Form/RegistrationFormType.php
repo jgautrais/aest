@@ -19,6 +19,9 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'attr' => [
+                    'placeholder' => 'example@email.com'
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter an email',
@@ -41,6 +44,9 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('pseudo', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'pseudo'
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a pseudo',

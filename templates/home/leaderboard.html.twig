@@ -14,12 +14,12 @@
 		</div>
 		{% include "/home/_login_modal.html.twig" %}
 		<table class="w-full text-left table-fixed break-all">
-			<thead class="text-yellow-800 text-base sm:text-lg border-b-2 border-yellow-300 bg-yellow-50">
+			<thead class="text-yellow-800 text-sm sm:text-lg border-b-2 border-yellow-300 bg-yellow-50">
 				<tr>
 					<th class="pb-2 pt-1 w-20">Rank</th>
 					<th class="pb-2 pt-1 w-1/2">Pseudo</th>
 					<th class="pb-2 pt-1 w-2/6">Turns</th>
-					<th class="pb-2 pt-1 w-3/6">Avg. Diff.*</th>
+					<th class="pb-2 pt-1 w-3/6 tracking-tighter">Avg. Diff.*</th>
 				</tr>
 			</thead>
 			<tbody class="text-sm sm:text-base">
@@ -73,6 +73,7 @@
 		</table>
 
 		<p class="mt-12 text-sm text-gray-600">*Average Difference</p>
+		<a href="{{ path('home') }}" class="mt-12 mb-12 text-white text-sm block inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2.5 bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Back to the game</a>
 	</div>
 
 

@@ -156,7 +156,12 @@ export default class Board {
      */
     getInputValue() {
         const inputValue = this._inputValue.val();
-        if (inputValue === '' || isNaN(+inputValue)) {
+        if (
+            inputValue === '' ||
+            isNaN(+inputValue) ||
+            +inputValue < 0 ||
+            +inputValue > 100
+        ) {
             this._inputValue.val('');
             return null;
         } else {
