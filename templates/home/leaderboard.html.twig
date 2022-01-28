@@ -13,7 +13,7 @@
 			{% endif %}
 		</div>
 		{% include "/home/_login_modal.html.twig" %}
-		<table class="w-full text-left table-fixed break-all">
+		<table class="w-full text-left table-fixed">
 			<thead class="text-yellow-800 text-sm sm:text-lg border-b-2 border-yellow-300 bg-yellow-50">
 				<tr>
 					<th class="pb-2 pt-1 w-20">Rank</th>
@@ -26,20 +26,20 @@
 				{% for entry in leaderboard|slice(0, leaderboardSize) %}
 					{% if isInLeaderBoard is defined and isInLeaderBoard == true and entry.id == app.user.id %}
 						<tr class="border-b border-grey-200 bg-purple-50 text-purple-700 font-bold">
-							<td class="pt-5 pb-1 pr-4 align-bottom pl-2">{{ loop.index }}</td>
-							<td class="pt-3 pb-1 pr-4 align-bottom">{{ entry.pseudo }}</td>
-							<td class="pt-3 pb-1 pr-4 align-bottom">{{ entry.turns }}</td>
-							<td class="pt-3 pb-1 pr-4 align-bottom">
+							<td class="pt-5 pb-1 pr-4 align-bottom pl-2 overflow-ellipsis overflow-hidden">{{ loop.index }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom overflow-ellipsis overflow-hidden">{{ entry.pseudo }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom overflow-ellipsis overflow-hidden">{{ entry.turns }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom overflow-ellipsis overflow-hidden">
 								<span class="text-base xs:text-lg font-bold">{{ entry.meanAccuracy|number_format(3) }}</span>%
 							</td>
 						</tr>
 
 					{% else %}
 						<tr class="border-b border-grey-200">
-							<td class="pt-5 pb-1 pr-4 align-bottom pl-2">{{ loop.index }}</td>
-							<td class="pt-3 pb-1 pr-4 align-bottom">{{ entry.pseudo }}</td>
-							<td class="pt-3 pb-1 pr-4 align-bottom">{{ entry.turns }}</td>
-							<td class="pt-3 pb-1 pr-4 align-bottom">
+							<td class="pt-5 pb-1 pr-4 align-bottom pl-2 overflow-ellipsis overflow-hidden">{{ loop.index }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom overflow-ellipsis overflow-hidden">{{ entry.pseudo }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom overflow-ellipsis overflow-hidden">{{ entry.turns }}</td>
+							<td class="pt-3 pb-1 pr-4 align-bottom overflow-ellipsis overflow-hidden">
 								<span class="text-base xs:text-lg font-bold">{{ entry.meanAccuracy|number_format(3) }}</span>%
 							</td>
 						</tr>
@@ -59,10 +59,10 @@
 						</td>
 					</tr>
 					<tr class="border-b border-grey-200 bg-purple-50 text-purple-700 font-bold">
-						<td class="pt-5 pb-1 pr-4 align-bottom pl-2">{{ leaderboardPosition }}</td>
-						<td class="pt-3 pb-1 pr-4 align-bottom">{{ app.user.pseudo }}</td>
-						<td class="pt-3 pb-1 pr-4 align-bottom">{{ userTurns }}</td>
-						<td class="pt-3 pb-1 pr-4 align-bottom">
+						<td class="pt-5 pb-1 pr-4 align-bottom pl-2 overflow-ellipsis overflow-hidden">{{ leaderboardPosition }}</td>
+						<td class="pt-3 pb-1 pr-4 align-bottom overflow-ellipsis overflow-hidden">{{ app.user.pseudo }}</td>
+						<td class="pt-3 pb-1 pr-4 align-bottom overflow-ellipsis overflow-hidden">{{ userTurns }}</td>
+						<td class="pt-3 pb-1 pr-4 align-bottom overflow-ellipsis overflow-hidden">
 							<span class="text-base xs:text-lg font-bold">{{ userAccuracy|number_format(3) }}</span>%
 						</td>
 					</tr>
