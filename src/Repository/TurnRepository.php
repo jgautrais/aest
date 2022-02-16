@@ -56,12 +56,12 @@ class TurnRepository extends ServiceEntityRepository
             ->createQueryBuilder('t')
             ->select("t.accuracyCategory, count(t.accuracyCategory) as turns, sum(t.accuracy) as sumAccuracy")
             ->andwhere('t.user = :user')
-            ->andWhere('t.date BETWEEN :l30days AND :today')
+            ->andWhere('t.date BETWEEN :l7days AND :today')
             ->groupBy("t.accuracyCategory")
             ->orderBy("t.accuracyCategory", "ASC")
             ->setParameter('user', $user)
             ->setParameter('today', date('Y-m-d h:i:s'))
-            ->setParameter('l30days', date('Y-m-d h:i:s', strtotime("-7 days")));
+            ->setParameter('l7days', date('Y-m-d h:i:s', strtotime("-7 days")));
 
         return (array) $query->getQuery()->getResult();
     }
