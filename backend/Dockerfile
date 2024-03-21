@@ -65,6 +65,8 @@ FROM backend-base as build-production
 USER root
 
 COPY --chown=www-data:www-data . .
+RUN composer install --no-dev
+
 ENV NODE_ENV=production
 
 RUN yarn install
