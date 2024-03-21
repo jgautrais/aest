@@ -62,10 +62,10 @@ USER www-data
 #################################
 FROM backend-base as build-production
 
-USER root
+USER www-data
 
 COPY --chown=www-data:www-data . .
-RUN composer install
+RUN composer install --no-dev
 
 ENV NODE_ENV=production
 
