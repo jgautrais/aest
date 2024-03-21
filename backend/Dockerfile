@@ -60,9 +60,7 @@ USER www-data
 #################################
 ### BUILD PRODUCTION IMAGE ####
 #################################
-FROM backend-base as build-production
-
-FROM node:lts-alpine as builder
+FROM node:lts-alpine as build-production
 
 ENV NODE_ENV=production
 WORKDIR /app
