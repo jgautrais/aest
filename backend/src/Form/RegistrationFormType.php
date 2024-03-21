@@ -52,7 +52,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Please enter a pseudo',
                     ]),
                     new Length([
-                        'min' => 4,
+                        'min' => 3,
                         'minMessage' => 'Your pseudo should be at least {{ limit }} characters',
                         'max' => 255,
                     ]),
