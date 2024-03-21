@@ -1,0 +1,26 @@
+services:
+  backend:
+    healthcheck:
+      test: [ "CMD-SHELL", "netstat -an | grep :9000 || exit 1" ]
+      interval: 6s
+      timeout: 6s
+      retries: 40
+    environment:
+      # SYMFONY SPECIFICS
+      APP_NAME: ${APP_NAME}
+      APP_ENV: ${ENV}
+      APP_DEBUG: ${DEBUG}
+      APP_SECRET: ${APP_SECRET}
+      # DATABASE
+      DATABASE_URL: mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=8.0.32
+      # EMAILING
+      MAILER_DSN: ${MAIL_MAILER}://${MAIL_USERNAME}:${MAIL_PASSWORD}@${MAIL_HOST}:${MAIL_PORT}
+      MAILER_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+
+  backend_webserver:
+    depends_on:
+      backend:
+        condition: service_healthy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.backend_webserver.rule=Host(`${DOMAIN}`)

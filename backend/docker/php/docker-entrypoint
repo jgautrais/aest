@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+# see https://github.com/docker-library/php/blob/master/8.1/alpine3.17/fpm/docker-php-entrypoint
+# Add specific startup command
+composer install
+yarn install
+yarn encore dev
+# php artisan migrate --force
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php-fpm "$@"
+fi
+
+exec "$@"

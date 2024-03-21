@@ -1,0 +1,28 @@
+name: Deploy
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_prod:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create SSH key
+        run: |
+          mkdir ~/.ssh/
+          echo "${{secrets.SSH_KNOWN_HOSTS}}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          eval $(ssh-agent -s)
+          ssh-add <(echo "${{secrets.SSH_PRIVATE_KEY}}")
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "echo '${{ secrets.GHCR_TOKEN }}' | docker login ghcr.io -u ${{ github.actor }} --password-stdin"
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend:main"
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend_webserver:main"
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker compose down"
+          scp docker-compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/docker-compose.yml"
+          scp -pqr containers/* "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/containers/"
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker compose up -d"
+
+        shell: bash
