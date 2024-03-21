@@ -68,7 +68,7 @@ RUN composer install --no-dev --no-scripts
 ENV NODE_ENV=production
 
 RUN yarn install
-RUN yarn run encore production
+RUN yarn run build
 
 #################################
 ### BACKEND PRODUCTION IMAGE ####
