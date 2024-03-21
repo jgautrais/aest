@@ -84,7 +84,7 @@ COPY --from=build-production --chown=www-data:www-data /app/public/build /var/ww
 
 USER www-data
 
-RUN composer install --no-dev
+RUN composer install --no-dev --no-scripts
 
 ##################################
 ### WEBSERVER NGINX BASE IMAGE ###
