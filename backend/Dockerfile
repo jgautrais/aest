@@ -62,13 +62,17 @@ USER www-data
 #################################
 FROM backend-base as build-production
 
-COPY --chown=www-data:www-data . .
-RUN composer install --no-dev --no-scripts
+FROM node:lts-alpine as builder
 
 ENV NODE_ENV=production
+WORKDIR /app
 
-RUN yarn install
-RUN yarn run build
+ADD package.json yarn.lock webpack.config.js ./
+ADD assets ./assets
+
+RUN mkdir -p public && \
+    NODE_ENV=development yarn install && \
+    yarn run build
 
 #################################
 ### BACKEND PRODUCTION IMAGE ####
@@ -78,7 +82,7 @@ FROM backend-base as backend-production
 USER root
 
 COPY --chown=www-data:www-data . .
-COPY --from=build-production --chown=www-data:www-data /var/www/html/public/build /var/www/html/public/build
+COPY --from=build-production --chown=www-data:www-data /app/public/build /var/www/html/public/build
 
 USER www-data
 
