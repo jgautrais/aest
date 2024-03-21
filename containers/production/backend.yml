@@ -1,0 +1,22 @@
+services:
+  backend:
+    image: ${REGISTRY_ADDRESS}aest-backend:main
+    restart: always
+    environment:
+      TEMPLATE_PHP_INI: production
+      SESSION_SECURE_COOKIE: 1
+    volumes:
+      - aest_backend_storage:/var/www/html/var/storage
+
+  backend_webserver:
+    image: ${REGISTRY_ADDRESS}aest-backend_webserver:main
+    restart: always
+    volumes:
+      - aest_backend_webserver_logs:/static-logs
+    labels:
+      - traefik.http.routers.backend_webserver.entrypoints=websecure
+      - traefik.http.routers.backend_webserver.tls.certresolver=httpsresolver
+
+volumes:
+  aest_backend_storage:
+  aest_backend_webserver_logs:

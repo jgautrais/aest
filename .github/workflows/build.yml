@@ -1,0 +1,72 @@
+name: Build Docker images
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to ghcr.io
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - uses: int128/kaniko-action@v1
+        with:
+          context: backend
+          build-args: |
+            DOCKER_UID=${{ secrets.DOCKER_UID }}
+            DOCKER_GID=${{ secrets.DOCKER_GID }}
+          target: backend-production
+          push: true
+          tags: ghcr.io/${{ github.repository }}-backend:${{ github.head_ref || github.ref_name }}
+          cache: true
+          cache-repository: ghcr.io/${{ github.repository }}-backend/cache
+
+  build_backend_webserver:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to ghcr.io
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - uses: int128/kaniko-action@v1
+        with:
+          context: backend
+          build-args: |
+            DOCKER_UID=${{ secrets.DOCKER_UID }}
+            DOCKER_GID=${{ secrets.DOCKER_GID }}
+          target: webserver-production
+          push: true
+          tags: ghcr.io/${{ github.repository }}-backend_webserver:${{ github.head_ref || github.ref_name }}
+          cache: true
+          cache-repository: ghcr.io/${{ github.repository }}-backend/cache
+
+  build_frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to ghcr.io
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - uses: int128/kaniko-action@v1
+        with:
+          context: frontend
+          build-args: |
+            DOCKER_UID=${{ secrets.DOCKER_UID }}
+            DOCKER_GID=${{ secrets.DOCKER_GID }}
+          target: build-production
+          push: true
+          tags: ghcr.io/${{ github.repository }}-build-production:${{ github.head_ref || github.ref_name }}
+          cache: true
+          cache-repository: ghcr.io/${{ github.repository }}-build/cache

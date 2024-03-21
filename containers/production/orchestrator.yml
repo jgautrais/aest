@@ -1,0 +1,23 @@
+services:
+  orchestrator:
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    command:
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      - --certificatesresolvers.httpsresolver.acme.tlschallenge=true
+      - --certificatesresolvers.httpsresolver.acme.caserver=${LETS_ENCRYPT_SERVER}
+      - --certificatesresolvers.httpsresolver.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.httpsresolver.acme.storage=/letsencrypt/acme.json
+    volumes:
+      - letsencrypt_volume:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  letsencrypt_volume:
