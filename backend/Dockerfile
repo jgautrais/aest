@@ -62,6 +62,9 @@ USER www-data
 #################################
 FROM backend-base as build-production
 
+USER root
+
+COPY --chown=www-data:www-data . .
 ENV NODE_ENV=production
 
 RUN yarn install
