@@ -82,6 +82,10 @@ USER root
 COPY --chown=www-data:www-data . .
 COPY --from=build-production --chown=www-data:www-data /app/public/build /var/www/html/public/build
 
+RUN mkdir -p var/log
+RUN mkdir -p var/storage
+RUN chown -R www-data:www-data /var
+
 USER www-data
 
 RUN composer install --no-dev --no-scripts
