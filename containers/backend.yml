@@ -1,5 +1,5 @@
 services:
-  backend:
+  aest_backend:
     healthcheck:
       test: [ "CMD-SHELL", "netstat -an | grep :9000 || exit 1" ]
       interval: 6s
@@ -12,15 +12,15 @@ services:
       APP_DEBUG: ${DEBUG}
       APP_SECRET: ${APP_SECRET}
       # DATABASE
-      DATABASE_URL: mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=8.0.32
+      DATABASE_URL: mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@aest_database:3306/${DATABASE_NAME}?serverVersion=8.0.32
       # EMAILING
       MAILER_DSN: ${MAIL_MAILER}://${MAIL_USERNAME}:${MAIL_PASSWORD}@${MAIL_HOST}:${MAIL_PORT}
       MAILER_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
 
-  backend_webserver:
+  aest_backend_webserver:
     depends_on:
-      backend:
+      aest_backend:
         condition: service_healthy
     labels:
       - traefik.enable=true
-      - traefik.http.routers.backend_webserver.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.aest_backend_webserver.rule=Host(`${DOMAIN}`)

@@ -2,7 +2,7 @@ services:
   database_administration:
     image: phpmyadmin/phpmyadmin:5
     environment:
-      PMA_HOSTS: database
+      PMA_HOSTS: aest_database
     profiles:
       - local
     labels:
