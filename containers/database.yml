@@ -1,5 +1,5 @@
 services:
-  database:
+  aest_database:
     image: mysql:8.0
     volumes:
       - aest_database_volume:/var/lib/mysql
