@@ -65,8 +65,9 @@ FROM node:lts-alpine as build-production
 ENV NODE_ENV=production
 WORKDIR /app
 
-ADD package.json yarn.lock webpack.config.js ./
+ADD package.json yarn.lock webpack.config.js tailwind.config.js postcss.config.js ./
 ADD assets ./assets
+ADD templates ./templates
 
 RUN mkdir -p public && \
     NODE_ENV=development yarn install && \
@@ -82,8 +83,6 @@ USER root
 COPY --chown=www-data:www-data . .
 COPY --from=build-production --chown=www-data:www-data /app/public/build /var/www/html/public/build
 
-RUN mkdir -p var/log
-RUN mkdir -p var/storage
 RUN chown -R www-data:www-data /var
 
 USER www-data
