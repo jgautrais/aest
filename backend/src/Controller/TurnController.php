@@ -33,7 +33,7 @@ class TurnController extends AbstractController
     }
 
     /**
-     * @Route("/saveTurn/{area}/{estimate}/{accuracy}/{accuracyCategory}/",
+     * @Route("/saveTurn/{area}/{estimate}/{accuracy}/{accuracyCategory}",
      * name="saveTurn",
      * requirements={
      * "area"="([0-9]|[1-9][0-9]|100)",
@@ -73,7 +73,7 @@ class TurnController extends AbstractController
     }
 
     /**
-     * @Route("/incrementGameCount/", name="incrementGameCount")
+     * @Route("/incrementGameCount", name="incrementGameCount")
      */
     public function incrementGameCount(EntityManagerInterface $entityManager): Response
     {
