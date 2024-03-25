@@ -47,7 +47,7 @@ class TurnController extends AbstractController
         int $accuracyCategory,
         EntityManagerInterface $entityManager
     ): Response {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $user = $this->getUser();
 
@@ -77,7 +77,7 @@ class TurnController extends AbstractController
      */
     public function incrementGameCount(EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $user = $this->getUser();
 
@@ -101,7 +101,7 @@ class TurnController extends AbstractController
         TurnRepository $turnRepository,
         HandleUserStats $handleUserStats
     ): Response {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $user = $this->getUser();
 
