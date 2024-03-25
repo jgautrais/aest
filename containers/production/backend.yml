@@ -14,6 +14,8 @@ services:
     volumes:
       - aest_backend_webserver_logs:/static-logs
     labels:
+      - traefik.enable=true
+      - traefik.http.routers.aest_backend_webserver.rule=Host(`aest.${DOMAIN}`)
       - traefik.http.routers.aest_backend_webserver.entrypoints=websecure
       - traefik.http.routers.aest_backend_webserver.tls.certresolver=httpsresolver
 
