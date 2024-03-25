@@ -1,0 +1,10 @@
+# Containers are managed inside the 'containers' folder
+include:
+  - path:
+      - aest/containers/database.yml
+      - aest/containers/database_administration.yml
+      - aest/containers/backend.yml
+      - aest/containers/mailing.yml
+      - aest/containers/${ENV:?err}/backend.yml
+    env_file:
+      - aest/.env
