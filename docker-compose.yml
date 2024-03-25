@@ -4,9 +4,8 @@ include:
       - containers/database.yml
       - containers/database_administration.yml
       - containers/backend.yml
-      - containers/orchestrator.yml
       - containers/mailing.yml
-      - containers/${ENV}/backend.yml
-      - containers/${ENV}/orchestrator.yml
+      - containers/${ENV:?err}/backend.yml
+      - containers/${ENV:?err}/orchestrator.yml
     env_file:
       - .env
