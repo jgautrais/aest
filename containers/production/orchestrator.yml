@@ -1,5 +1,5 @@
 services:
-  orchestrator:
+  aest_orchestrator:
     ports:
       - 80:80
       - 443:443
