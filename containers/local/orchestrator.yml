@@ -1,6 +1,5 @@
 services:
   orchestrator:
-    image: traefik:v2.10
     ports:
       - 80:80
       - 8080:8080
@@ -8,5 +7,3 @@ services:
       - --providers.docker
       - --providers.docker.exposedbydefault=false
       - --api.insecure=true
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro,delegated

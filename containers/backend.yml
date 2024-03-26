@@ -21,3 +21,5 @@ services:
     depends_on:
       aest_backend:
         condition: service_healthy
+    labels:
+      - traefik.enable=true

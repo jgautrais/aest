@@ -16,7 +16,6 @@ services:
       context: ../backend
       target: webserver-local
     labels:
-      - traefik.enable=true
       - traefik.http.routers.aest_backend_webserver.rule=Host(`${DOMAIN}`)
     volumes:
       - ../backend:/var/www/html/:delegated
