@@ -17,12 +17,12 @@ jobs:
           chmod 644 ~/.ssh/known_hosts
           eval $(ssh-agent -s)
           ssh-add <(echo "${{secrets.SSH_PRIVATE_KEY}}")
-          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "echo '${{ secrets.GHCR_TOKEN }}' | docker login ghcr.io -u ${{ github.actor }} --password-stdin"
-          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend:main"
-          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend_webserver:main"
-          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu && docker compose down"
-          scp docker-compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/docker-compose.yml"
-          scp -pqr containers/* "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/containers/"
-          ssh "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu && docker compose up -d"
+          ssh -p ${{secrets.SERVER_PORT}} "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "echo '${{ secrets.GHCR_TOKEN }}' | docker login ghcr.io -u ${{ github.actor }} --password-stdin"
+          ssh -p ${{secrets.SERVER_PORT}} "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend:main"
+          ssh -p ${{secrets.SERVER_PORT}} "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu/${{ github.event.repository.name }} && docker pull ghcr.io/${{ github.repository }}-backend_webserver:main"
+          ssh -p ${{secrets.SERVER_PORT}} "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu && docker compose down"
+          scp -P ${{secrets.SERVER_PORT}} docker-compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/docker-compose.yml"
+          scp -P ${{secrets.SERVER_PORT}} -pqr containers/* "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}:/home/ubuntu/${{ github.event.repository.name }}/containers/"
+          ssh -p ${{secrets.SERVER_PORT}} "${{ secrets.SSH_USER }}@${{ secrets.SERVER_HOSTNAME }}" "cd /home/ubuntu && docker compose up -d"
 
         shell: bash
