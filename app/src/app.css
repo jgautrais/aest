@@ -1,0 +1,109 @@
+@import 'tailwindcss';
+
+/* Tailwind v2 default palette, kept to render exactly like the original game */
+@theme {
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-red-100: #fee2e2;
+    --color-red-500: #ef4444;
+    --color-red-800: #991b1b;
+    --color-yellow-100: #fef3c7;
+    --color-yellow-300: #fcd34d;
+    --color-yellow-800: #92400e;
+    --color-green-100: #d1fae5;
+    --color-green-500: #10b981;
+    --color-green-800: #065f46;
+    --color-blue-400: #60a5fa;
+    --color-blue-500: #3b82f6;
+    --color-blue-600: #2563eb;
+    --color-purple-100: #ede9fe;
+    --color-purple-200: #ddd6fe;
+    --color-purple-400: #a78bfa;
+    --color-purple-500: #8b5cf6;
+    --color-purple-600: #7c3aed;
+    --color-purple-700: #6d28d9;
+}
+
+@layer base {
+    button,
+    [role='button'] {
+        cursor: pointer;
+    }
+}
+
+input {
+    min-width: 0 !important;
+}
+
+.description {
+    max-width: 21rem;
+}
+
+.area_container {
+    width: 300px;
+    height: 300px;
+}
+
+.area_container tr td {
+    padding: 0;
+    margin: 0;
+}
+
+.area_cell {
+    width: 5%;
+    height: 5%;
+}
+
+#turnCounter {
+    top: -1.5rem;
+}
+
+.board_container {
+    width: 300px;
+    height: 300px;
+}
+
+.stats_container {
+    width: 290px;
+    height: 290px;
+    top: 5px;
+    left: 5px;
+}
+
+.hint {
+    top: 110px;
+    left: 45px;
+}
+
+.button-disabled {
+    background-color: #ddd !important;
+}
+
+@media (hover: none) and (max-width: 480px) {
+    .area_border {
+        margin-top: 1.7rem;
+    }
+
+    .area_container {
+        width: 150px;
+        height: 150px;
+    }
+
+    .stats_container {
+        top: -6.3rem;
+        left: -70px;
+        border: 2px solid black;
+    }
+
+    .hint {
+        top: 2.5rem;
+        left: -30px;
+    }
+}

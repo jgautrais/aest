@@ -6,15 +6,24 @@ Visual assessment of disease is a key aspect to many phytopathological research 
 
 This project is an attempt to reproduce such a training tool.
 
-## Installation Guide
-### Environment files
-`cp .env.example .env`
-Fill all `.env` variables with necessary values.
+Play it on https://aest.jeremygautrais.fr
 
-### Starting containers
-You just have to run :
-`docker compose up -d`
+## Stack
+Static site built with [Svelte 5](https://svelte.dev), [Tailwind CSS 4](https://tailwindcss.com) and [Vite](https://vite.dev), served by nginx.
 
+## Development
+With Docker (Traefik + Vite dev server with hot reload, on http://aest.localhost):
 
+```bash
+docker compose up -d
+```
 
+Without Docker:
 
+```bash
+cd app
+npm install
+npm run dev
+```
+
+Tests: `npm test` (in `app/`).

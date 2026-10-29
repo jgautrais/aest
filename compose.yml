@@ -1,0 +1,38 @@
+# Local development stack: reverse proxy + Vite dev server (hot reload).
+# App: http://${DOMAIN:-aest.localhost}
+# Traefik dashboard: http://localhost:8080
+#
+# The source is bind-mounted into the dev container, so editing a file under
+# app/ triggers Vite's hot reload — just save and the browser updates.
+services:
+  traefik:
+    image: traefik:v3
+    container_name: aest_traefik
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --global.sendanonymoususage=false
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  aest_app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+      target: local
+    container_name: aest_app
+    restart: unless-stopped
+    # Hot reload: source shadows the image content; node_modules stays baked in.
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.aest_app.rule=Host(`${DOMAIN:-aest.localhost}`)
+      - traefik.http.routers.aest_app.entrypoints=web
+      - traefik.http.services.aest_app.loadbalancer.server.port=5173

@@ -1,9 +1,0 @@
-services:
-  aest_orchestrator:
-    ports:
-      - 80:80
-      - 8080:8080
-    command:
-      - --providers.docker
-      - --providers.docker.exposedbydefault=false
-      - --api.insecure=true

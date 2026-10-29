@@ -1,6 +1,18 @@
-/.idea
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
 .env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+
+# OS
 .DS_Store
 *.orig
-orchestrator/certs/local-cert.pem
-orchestrator/certs/local-key.pem
